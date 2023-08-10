@@ -9,11 +9,11 @@ namespace Cdrcs
 {
     public class Variant
     {
-        public UInt64 uint_value;
-        public Int64 int_value;
-        public double double_value;
-        public string string_value;
-        public string  wstring_value;
+        public UInt64 uint_value = 0;
+        public Int64 int_value = 0;
+        public double double_value = 0.0;
+        public string string_value = string.Empty;
+        public string  wstring_value = string.Empty;
         public bool nothing;
     }
 }

@@ -16,11 +16,13 @@ namespace InternalTest
     };
 
     [Schema]
+    [Attribute("Foo", "foo")]
+    [Attribute("Bar", "bar")]
     public interface BasicTypes
     {
 
         [Id(0)]
-        [Attribute("name", "Boolean")]
+        [Attribute("Name", "Boolean")]
         bool _bool { get; set; }
 
         [Id(2)]
