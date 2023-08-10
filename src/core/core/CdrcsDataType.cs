@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Cdrcs
 {
+    // Empty schema with no fields
+    public class Void
+    {
+    }
+
     public enum CdrcsDataType
     {
         BT_STOP = 0,

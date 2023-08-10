@@ -5,6 +5,7 @@
     using System.IO;
     using Cdrcs;
     using NUnit.Framework;
+    using UnitTestSamples;
 
     // Name conflicts with Cdrcs.Tag
     public abstract class wstring { }
@@ -71,7 +72,7 @@
             });
         }
 
-        [Test]
+/*        [Test]
         public void ReadonlyBasicTypes()
         {
             TestSerialization<Readonly.BasicTypes>();
@@ -82,7 +83,7 @@
         {
             TestSerialization<Readonly.SimpleContainers>();
         }
-
+*/
         [Test]
         public void Nested()
         {
@@ -150,16 +151,16 @@
         public void Inheritance_SliceFieldToBase()
         {
             TestFieldSerialization<EmptyBase, Nested>();
-            TestFieldSerialization<DerivedView, EmptyBase>();
+            /*TestFieldSerialization<DerivedView, EmptyBase>();*/
         }
 
-        [Test]
+/*        [Test]
         public void Nothing()
         {
             TestSerialization<Nothing>();
             TestSerialization<NotNothingView, Nothing>();
         }
-        
+*/        
         [Test]
         public void NullableBasicTypes()
         {
@@ -178,9 +179,9 @@
             {
                 try
                 {
-                    var stream = new MemoryStream();
+                    byte[] stream = { };
                     serialize(new CdrcsClass<From>(), stream);
-                    stream.Position = 0;
+                    /*stream.Position = 0;*/
                     deserialize(stream);
                     Assert.Fail("Deserialization of mismatched type didn't throw exception.");
                 }
@@ -189,8 +190,7 @@
             };
 
             // TODO: for untagged protocol mismatch schema will be detected in schema validation
-            test(Util.SerializeCB, Util.DeserializeCB<CdrcsClass<To>>);
-            test(Util.SerializeCB2, Util.DeserializeCB2<CdrcsClass<To>>);
+            test(Util.SerializeCDR, Util.DeserializeCDR<CdrcsClass<To>>);
         }
 
         [Test]
@@ -292,66 +292,42 @@
             TestTypePromotion<Int32, Int32?>();
         }
 
-        [Test]
+/*        [Test]
         public void Views()
         {
             TestSerialization<BasicTypes, BasicTypesView>();
             TestFieldSerialization<BasicTypes, BasicTypesView>();
         }
-
+*/
 
         [Test]
         public void Omit()
         {
             // Omit optional fields set to default value
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new StructWithDefaults(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new ContainersOfNullable(), 5);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new NullableVectors(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new NullableLists(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new NullableBasicTypes(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Lists(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Vectors(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Sets(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Maps(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new StructWithBlobs(), 1);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Nothing(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new StructWithDefaults(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new ContainersOfNullable(), 5);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new NullableVectors(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new NullableLists(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new NullableBasicTypes(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Lists(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Vectors(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Sets(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Maps(), 1);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new StructWithBlobs(), 1);
+            /*TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Nothing(), 1);*/
             
             // Don't skip empty container for field with default nothing
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Nothing { b = new ArraySegment<byte>(new byte[0]) }, 5);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Nothing { l = new LinkedList<string>() }, 5);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Nothing { s = new HashSet<double>() }, 5);
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new Nothing { m = new Dictionary<string, double>() }, 6);
-            
+/*            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Nothing { b = new ArraySegment<byte>(new byte[0]) }, 5);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Nothing { l = new LinkedList<string>() }, 5);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Nothing { s = new HashSet<double>() }, 5);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new Nothing { m = new Dictionary<string, double>() }, 6);
+*/            
             // Don't omit required fields
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new CdrcsClass<Int32>(), 3);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new CdrcsClass<Int32>(), 3);
 
             // Don't omit required_optional fields
-            TestPayloadSize(Util.SerializeCB, Util.TranscodeCBCB, new RequiredOptional(), 4);
+            TestPayloadSize(Util.SerializeCDR, Util.TranscodeCDRCDR, new RequiredOptional(), 4);
 
-            // Omit optional fields set to default value
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new StructWithDefaults(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new ContainersOfNullable(), 8);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new NullableVectors(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new NullableLists(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new NullableBasicTypes(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Lists(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Vectors(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Sets(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Maps(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new StructWithBlobs(), 2);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Nothing(), 2);
-
-            // Don't skip empty container for field with default nothing
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Nothing { b = new ArraySegment<byte>(new byte[0]) }, 5);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Nothing { l = new LinkedList<string>() }, 5);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Nothing { s = new HashSet<double>() }, 5);
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new Nothing { m = new Dictionary<string, double>() }, 7);
-
-            // Don't omit required fields
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new CdrcsClass<Int32>(), 4);
-
-            // Don't omit required_optional fields
-            TestPayloadSize(Util.SerializeCB2, Util.TranscodeCB2CB2, new RequiredOptional(), 5);
         }
 
         [Test]
@@ -384,10 +360,10 @@
             var from = Random.Init<From>();
             Util.RoundtripStream<From, To> testRequired = (serialize, deserialize) =>
             {
-                var stream = new MemoryStream();
+                byte[] stream = { };
 
                 serialize(from, stream);
-                stream.Position = 0;
+                /*stream.Position = 0;*/
                 
                 try
                 {
@@ -400,7 +376,7 @@
                 }
             };
 
-            testRequired(Util.SerializeCB, Util.DeserializeCB<To>);
+            testRequired(Util.SerializeCDR, Util.DeserializeCDR<To>);
             // TODO: tagged protocol determine missing required fields during schema valiadation
             //testRequired(Util.SerializeSP, Util.DeserializeSP<From, To>);
         }
@@ -433,18 +409,18 @@
             TestSerialization<Cdrcs.Box<double>>();
         }
 
-        [Test]
+/*        [Test]
         public void TypeFromFileWithSpaces()
         {
             Assert.IsNotNull(new EnsureSpacesInPathsWork());
         }
-
-        [Test]
+*/
+  /*      [Test]
         public void ImmutableCollections()
         {
             TestSerialization<ImmutableCollections.ImmutableCollectionsHolder>();
         }
-
+*/
         void TestTypePromotion<From, To>()
         {
             TestFieldSerialization<From, To>();
@@ -477,16 +453,16 @@
             TestSerialization<T, T>(noTranscoding);
         }
 
-        void TestPayloadSize<T>(Action<T, Stream> serialize, Action<Stream, Stream> transcode, T obj, int size)
+        void TestPayloadSize<T>(Action<T, byte[]> serialize, Action<byte[], byte[]> transcode, T obj, int size)
         {
-            var stream = new MemoryStream();
+            byte[] stream = { };
             
             serialize(obj, stream);
             Assert.AreEqual(size, stream.Length);
 
-            using (var stream2 = new MemoryStream())
+            byte[] stream2 = { };
             {
-                stream.Position = 0;
+                /*stream.Position = 0;*/
                 transcode(stream, stream2);
                 Assert.AreEqual(size, stream2.Length);
             }

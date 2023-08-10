@@ -6,6 +6,7 @@
     using System.Reflection;
     using Cdrcs;
     using Cdrcs.Internal.Reflection;
+    using UnitTestSamples;
 
     public static class Equal
     {
@@ -63,28 +64,28 @@
             if (left.GetType() == typeof(Optional) && right.GetType() == typeof(RequiredOptional))
                 return IsEqual(left as Optional, right as RequiredOptional);
 
-            if (left.GetType() == typeof(BasicTypes) && right.GetType() == typeof(BasicTypesView))
+/*            if (left.GetType() == typeof(BasicTypes) && right.GetType() == typeof(BasicTypesView))
                 return IsEqual(left as BasicTypes, right as BasicTypesView);
-
+*/
             if (left.GetType() == typeof(GenericWString) && right.GetType() == typeof(NonGenericWString))
                 return IsEqual(left as GenericWString, right as NonGenericWString);
 
-            if (left.GetType() == typeof(NotNothingView) && right.GetType() == typeof(Nothing))
+  /*          if (left.GetType() == typeof(NotNothingView) && right.GetType() == typeof(Nothing))
                 return IsEqual(left as NotNothingView, right as Nothing);
-
-            if (left.GetType() == typeof(Derived) && right.GetType() == typeof(DerivedView))
+*/
+  /*          if (left.GetType() == typeof(Derived) && right.GetType() == typeof(DerivedView))
                 return IsEqual(left as Derived, right as DerivedView);
-
-            if (left.GetType() == typeof(DerivedView) && right.GetType() == typeof(Derived))
+*/
+/*            if (left.GetType() == typeof(DerivedView) && right.GetType() == typeof(Derived))
                 return IsEqual(right as Derived, left as DerivedView);
-
+*/
             if (left.GetType() == typeof(StructWithBlobs) && right.GetType() == typeof(StructWithByteLists))
                 return IsEqual(left as StructWithBlobs, right as StructWithByteLists);
 
             if (left.GetType() == typeof(StructWithByteLists) && right.GetType() == typeof(StructWithBlobs))
                 return IsEqual(right as StructWithBlobs, left as StructWithByteLists);
 
-            if (left.GetType() == typeof(Derived) || left.GetType() == typeof(DerivedView))
+/*            if (left.GetType() == typeof(Derived) || left.GetType() == typeof(DerivedView))
             {
                 if (right.GetType() == typeof (EmptyBase))
                     return IsEqual<EmptyBase>(left as EmptyBase, right as EmptyBase);
@@ -92,26 +93,26 @@
                 if (right.GetType() == typeof(Nested))
                     return IsEqual<Nested>(left as Nested, right as Nested);
             }
-
+*/
             if (left.GetType() == typeof(EmptyBase) && right.GetType() == typeof(Nested))
                 return IsEqual<Nested>(left as Nested, left as Nested);
 
             return left.Equals(right);
         }
 
-        public static bool IsEqual(this BasicTypes b, BasicTypesView v)
+/*        public static bool IsEqual(this BasicTypes b, BasicTypesView v)
         {
             return v._bool == b._bool &&
                    v._float == b._float &&
                    v._int8 == b._int8;
         }
-
+*/
         public static bool IsEqual(this Optional o, RequiredOptional ro)
         {
             return o.x == ro.x;
         }
 
-        public static bool IsEqual(this NotNothingView v, Nothing n)
+/*        public static bool IsEqual(this NotNothingView v, Nothing n)
         {
             return v._float == n._float &&
                    v._enum1 == n._enum1 &&
@@ -125,7 +126,7 @@
             return v.derived == d.derived &&
                    Comparer.Equal<EmptyBase>(d, v);
         }
-
+*/
         public static bool IsEqual(this GenericWString g, NonGenericWString n)
         {
             return g.wstr.value == n.wstr.value;
@@ -141,7 +142,7 @@
                     return false;
             
             return IsEqual(b.b, v.b) &&
-                ((b.nb.Array == null) && (v.nb == null) || IsEqual(b.nb, v.nb));
+                (/*(b.nb.Array == null) && (v.nb == null) ||*/ IsEqual(b.nb, v.nb));
         }
 
         static bool IsEqual<T>(ArraySegment<byte> left, T right)

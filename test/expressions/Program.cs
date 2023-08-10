@@ -11,8 +11,8 @@
     using Cdrcs;
     using Cdrcs.Expressions;
     using Cdrcs.Protocols;
-    using Cdrcs.IO.Unsafe;
     using Cdrcs.Internal.Reflection;
+    using Cdrcs.IO.Safe;
     using System.Text;
 
     internal static class DebugViewHelper
@@ -227,35 +227,11 @@
 
         static void Main(string[] args)
         {
-            Write("TranscodeCBCB.expressions",
-                new Transcoder<CompactBinaryReader<InputStream>, CompactBinaryWriter<OutputStream>>());
+            Write("DeserializeCDR.expressions",
+                new DeserializerDebugView<DdsCdrReader<InputBuffer>>(typeof(Example)));
 
-            Write("TranscodeSPCB.expressions",
-                new Transcoder<SimpleBinaryReader<InputStream>, CompactBinaryWriter<OutputStream>>(typeof(Example)));
-
-            Write("TranscodeCBSP.expressions",
-                new Transcoder<CompactBinaryReader<InputStream>, SimpleBinaryWriter<OutputStream>>(typeof(Example)));
-
-            Write("DeserializeCB.expressions",
-                new DeserializerDebugView<CompactBinaryReader<InputStream>>(typeof(Example)));
-
-            Write("DeserializeSP.expressions",
-                new DeserializerDebugView<SimpleBinaryReader<InputStream>>(typeof(Example)));
-
-            Write("DeserializeXml.expressions",
-                new DeserializerDebugView<SimpleXmlReader>(typeof(Example)));
-
-            Write("DeserializeJson.expressions",
-                new DeserializerDebugView<SimpleJsonReader>(typeof(Example)));
-
-            Write("SerializeSP.expressions",
-                new SerializerDebugView<SimpleBinaryWriter<OutputStream>>(typeof(Example)));
-
-            Write("SerializeCB.expressions",
-                new SerializerDebugView<CompactBinaryWriter<OutputStream>>(typeof(Example)));
-
-            Write("SerializeXml.expressions",
-                new SerializerDebugView<SimpleXmlWriter>(typeof(Example)));
+            Write("SerializeCDR.expressions",
+                new SerializerDebugView<DdsCdrWriter<OutputBuffer>>(typeof(Example)));
 
             Write("Clone.expressions", new CloneDebugView(typeof(Example)));
         }

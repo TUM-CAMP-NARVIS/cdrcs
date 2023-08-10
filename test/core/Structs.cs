@@ -4,7 +4,7 @@
     using System.IO;
     using Cdrcs;
     using NUnit.Framework;
-
+    using UnitTestSamples;
 
     [TestFixture]
     public class StructTests
@@ -60,20 +60,11 @@
         void TestSerialization<T>()
         {
             {
-                var stream = new MemoryStream();
+                byte[] stream = { };
                 var from = Random.Init<T>();
-                Util.SerializeCB(from, stream);
-                stream.Position = 0;
-                var to = Util.DeserializeCB<T>(stream);
-                Assert.IsTrue(Comparer.Equal(from, to));
-            }
-
-            {
-                var stream = new MemoryStream();
-                var from = Random.Init<T>();
-                Util.SerializeCB2(from, stream);
-                stream.Position = 0;
-                var to = Util.DeserializeCB2<T>(stream);
+                Util.SerializeCDR(from, stream);
+                /*stream.Position = 0;*/
+                var to = Util.DeserializeCDR<T>(stream);
                 Assert.IsTrue(Comparer.Equal(from, to));
             }
         }

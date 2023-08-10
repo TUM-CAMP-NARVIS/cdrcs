@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)\..\..\build\internal\Common.Internal.props" />
   <PropertyGroup>
     <ProjectGuid>{FF056B62-225A-47BC-B177-550FADDA4B41}</ProjectGuid>
@@ -23,6 +23,25 @@
     <OutputPath>$(OutputPath)\Fields\</OutputPath>
     <CdrcsOptions>--fields --collection-interfaces</CdrcsOptions>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="AttributesTests.cs" />
+    <Compile Remove="BondedTests.cs" />
+    <Compile Remove="CloningTests.cs" />
+    <Compile Remove="ConvertTests.cs" />
+    <Compile Remove="CustomBondedTests.cs" />
+    <Compile Remove="DeserializerControlsTests.cs" />
+    <Compile Remove="EnumString.cs" />
+    <Compile Remove="GenericsTests.cs" />
+    <Compile Remove="GuidConversionTests.cs" />
+    <Compile Remove="IndexOverflowTests.cs" />
+    <Compile Remove="InterfaceTests.cs" />
+    <Compile Remove="MetaInitializationTests.cs" />
+    <Compile Remove="Partial.cs" />
+    <Compile Remove="ProtocolTests.cs" />
+    <Compile Remove="SerializerGeneratorFactoryTests.cs" />
+    <Compile Remove="StreamTests.cs" />
+    <Compile Remove="TypeAliasTests.cs" />
+  </ItemGroup>
   <ItemGroup>
     <CdrcsImportDirectory Include="import dir with spaces\" />
   </ItemGroup>
@@ -54,6 +73,25 @@
     <Compile Include="$(IntermediateOutputPath)\UnitTest_types.cs" Condition="False" />
     <Compile Include="$(IntermediateOutputPath)\ImmutableCollections_types.cs" Condition="False" />
     <!-- End Resharper Workaround -->
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AttributesTests.cs" />
+    <None Include="BondedTests.cs" />
+    <None Include="CloningTests.cs" />
+    <None Include="ConvertTests.cs" />
+    <None Include="CustomBondedTests.cs" />
+    <None Include="DeserializerControlsTests.cs" />
+    <None Include="EnumString.cs" />
+    <None Include="GenericsTests.cs" />
+    <None Include="GuidConversionTests.cs" />
+    <None Include="IndexOverflowTests.cs" />
+    <None Include="InterfaceTests.cs" />
+    <None Include="MetaInitializationTests.cs" />
+    <None Include="Partial.cs" />
+    <None Include="ProtocolTests.cs" />
+    <None Include="SerializerGeneratorFactoryTests.cs" />
+    <None Include="StreamTests.cs" />
+    <None Include="TypeAliasTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.10.*" />

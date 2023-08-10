@@ -22,7 +22,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="properties\AssemblyInfo.cs" />
-    <CdrcsCodegen Include="schemas.bond" />
+    <Compile Include="ExpressionsTest.cs" />
     <!-- Resharper Workaround -->
     <Compile Include="$(IntermediateOutputPath)\schemas_types.cs" Condition="False" />
     <!-- End Resharper Workaround -->
@@ -30,8 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\src\core\Cdrcs.csproj" />
-    <ProjectReference Include="..\..\src\io\IO.csproj" />
-    <ProjectReference Include="..\..\src\json\JSON.csproj" />
     <ProjectReference Include="..\..\src\reflection\reflection.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildThisFileDirectory)\..\..\build\internal\Common.Internal.targets" />

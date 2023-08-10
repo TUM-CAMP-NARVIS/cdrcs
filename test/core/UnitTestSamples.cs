@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitTest
+﻿#pragma warning disable
+namespace UnitTestSamples
 {
-    enum EnumType1
+    using System.Collections.Generic;
+    using System;
+    using Cdrcs.Tag;
+    using Cdrcs;
+
+    public enum EnumType1
     {
         EnumValue1 = 5,
         EnumValue2 = 10,
@@ -16,711 +16,1366 @@ namespace UnitTest
         EnumValue5 = 99, //-10 in two's complement (cannot be expressed here)
     };
 
-    [Foo("foo")]
-    [Bar("bar")]
-    struct BasicTypes
+    [Schema]
+    [Attribute("Foo", "foo")]
+    [Attribute("Bar", "bar")]
+    public class BasicTypes
     {
-        [Name("Boolean")]
-     0: bool _bool;
-     2: string _str;
-     3: wstring _wstr;
-    14: int8 _int8;
-    15: int16 _int16;
-    16: int32 _int32;
-    17: int64 _int64;
-    13: uint8 _uint8;
-    11: uint16 _uint16;
-    12: uint32 _uint32;
-    10: uint64 _uint64;
-    18: double _double;
-    20: float _float;
-    21: EnumType1 _enum1 = Low;
-    22: DateTime dt;
+        [global::Cdrcs.Id(0)]
+        [Attribute("Name", "Boolean")]
+        public bool _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public string _str { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public wstring _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public sbyte _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public Int16 _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public Int32 _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public Int64 _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public byte _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public UInt16 _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public UInt32 _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public UInt64 _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public double _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public float _float { get; set; }
+
+        [global::Cdrcs.Id(21), Default(EnumType1.EnumValue1)]
+        public EnumType1 _enum1 { get; set; }
+
+        [global::Cdrcs.Id(22)]
+        public DateTime dt { get; set; }
     };
 
-    struct Integers
+    [Schema]
+    public class Integers
     {
-    14: int8 _int8;
-    15: int16 _int16;
-    16: int32 _int32;
-    17: int64 _int64;
-    13: uint8 _uint8;
-    11: uint16 _uint16;
-    12: uint32 _uint32;
-    10: uint64 _uint64;
+        [global::Cdrcs.Id(14)]
+        public sbyte _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public Int16 _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public Int32 _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public Int64 _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public byte _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public UInt16 _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public UInt32 _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public UInt64 _uint64 { get; set; }
+
     };
 
-    struct MaxUInt64
+    [Schema]
+    public class MaxUInt64
     {
-    10: uint64 _uint64;
+        [global::Cdrcs.Id(10)]
+        public UInt64 _uint64 { get; set; }
     };
 
-    struct FieldOfStructWithAliases
+/*    [Schema]
+    public class FieldOfStructWithAliases
     {
-    0: UnitTest.Aliases.BlobAlias b;
-    1: DateTime dt;
+        [global::Cdrcs.Id(0)]
+        UnitTestSamples.Aliases.BlobAlias b { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        DateTime dt { get; set; }
     }
 
-    struct ContainerOfStructWithAliases
+    [Schema]
+    public class ContainerOfStructWithAliases
     {
-    0: map<string, vector<nullable<UnitTest.Aliases.BlobAlias>>> m;
+        [global::Cdrcs.Id(0)]
+        Dictionary<string, LinkedList<nullable<UnitTestSamples.Aliases.BlobAlias>>> m { get; set; }
     }
 
-    struct BaseWithAliases : UnitTest.Aliases.BlobAlias
+    [Schema]
+    public class BaseWithAliases : UnitTestSamples.Aliases.BlobAlias
     {
     }
 
-    struct NestedWithAliases
+    [Schema]
+    public class NestedWithAliases
     {
-    0: FieldOfStructWithAliases f;
+        [global::Cdrcs.Id(0)]
+        FieldOfStructWithAliases f { get; set; }
     }
-
-    struct RequiredOptional
+*/
+    [Schema]
+    public class RequiredOptional
     {
-        [JsonName("OptionalX")]
-    7: required_optional uint32 x;
+        [Attribute("JsonName", "OptionalX")]
+        [global::Cdrcs.Id(7), RequiredOptional]
+        public UInt32 x { get; set; }
+    };
+
+    [Schema]
+    public class Required
+    {
+        [Attribute("JsonName", "RequiredX")]
+        [global::Cdrcs.Id(7), global::Cdrcs.RequiredAttribute]
+        public UInt32 x { get; set; }
+
+        [Attribute("JsonName", "RequiredY")]
+        [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
+        public BasicTypes y { get; set; }
+    };
+
+    [Schema]
+    public class DerivedRequired : Required
+    {
+        [global::Cdrcs.Id(1), global::Cdrcs.RequiredAttribute]
+        public UInt32 foo { get; set; }
+
+        [global::Cdrcs.Id(2), global::Cdrcs.RequiredAttribute]
+        public string bar { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public bool flag { get; set; }
+
+        [global::Cdrcs.Id(4), global::Cdrcs.RequiredAttribute]
+        public double bla { get; set; }
+    };
+
+    [Schema]
+    public class Optional
+    {
+        [Attribute("JsonName", "OptionalX")]
+        [global::Cdrcs.Id(7), global::Cdrcs.RequiredOptional]
+        public UInt32 x { get; set; } 
+
+        [Attribute("JsonName", "OptionalY")]
+        [global::Cdrcs.Id(9), global::Cdrcs.RequiredOptional]
+        public BasicTypes y { get; set; }
 };
 
-    struct Required
+    [Schema]
+    public class RequiredInDerived : Optional
     {
-        [JsonName("RequiredX")]
-    7: required uint32 x;
-        [JsonName("RequiredY")]
-    9: required BasicTypes y;
-    };
+        [global::Cdrcs.Id(7), global::Cdrcs.RequiredAttribute]
+        public UInt32 x { get; set; }
 
-    struct DerivedRequired : Required
-    {
-    1: required uint32 foo;
-    2: required string bar;
-    3: bool flag;
-    4: required double bla;
-    };
-
-    struct Optional
-    {
-        [JsonName("OptionalX")]
-    7: optional uint32 x;
-    [JsonName("OptionalY")]
-    9: optional BasicTypes y;
-};
-
-    struct RequiredInDerived : Optional
-    {
-    7: required uint32 x;
-    9: required BasicTypes y;
+        [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
+        public BasicTypes y { get; set; }
     }
 
-    struct RequiredInBase : Required
+    [Schema]
+    public class RequiredInBase : Required
     {
-    7: optional uint32 x;
-    9: optional BasicTypes y;
+        [global::Cdrcs.Id(7), global::Cdrcs.RequiredOptional]
+        public UInt32 x { get; set; }
+
+        [global::Cdrcs.Id(9), global::Cdrcs.RequiredOptional]
+        public BasicTypes y { get; set; }
 }
 
-    struct RequiredInBaseAndDerived : Required
+    [Schema]
+    public class RequiredInBaseAndDerived : Required
     {
-    7: required uint32 x;
-    9: required BasicTypes y;
+        [global::Cdrcs.Id(7), global::Cdrcs.RequiredAttribute]
+        public UInt32 x { get; set; }
+
+        [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
+        public BasicTypes y { get; set; }
     }
 
-    [xmlns("urn:UnitTest.BasicTypes")]
-    struct BasicTypesView view_of BasicTypes
+/*    [Schema]
+    [Attribute("xmlns", "urn:UnitTest.BasicTypes")]
+    public class BasicTypesView view_of BasicTypes
     {
         _bool, _int8, _float;
     };
-
-    struct Nested1
+*/
+    [Schema]
+    public class Nested1
     {
-    0: BasicTypes basic1;
-    1: BasicTypes basic2;
-    2: bond.GUID guid;
+        [global::Cdrcs.Id(0)]
+        public BasicTypes basic1 { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        public BasicTypes basic2 { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public Cdrcs.GUID guid { get; set; }
     };
 
-    struct Nested
+    [Schema]
+    public class Nested
     {
-    0: BasicTypes basic;
-    1: Nested1 nested;
+        [global::Cdrcs.Id(0)]
+        public BasicTypes basic { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        public Nested1 nested { get; set; }
     };
 
-    struct EmptyBase : Nested
+    [Schema]
+    public class EmptyBase : Nested
     {
     };
 
-    struct Derived : EmptyBase
+    [Schema]
+    public class Derived : EmptyBase
     {
-    0: string derived;
-        [JsonName("nestedDerived")]
-    1: Nested1 nested;
+        [global::Cdrcs.Id(0)]
+        public string derived { get; set; }
+
+        [Attribute("JsonName", "nestedDerived")]
+        [global::Cdrcs.Id(1)]
+        public Nested1 nested { get; set; }
     };
 
-    struct B
+    [Schema]
+    public class B
     {
-    0: int32 b;
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct B1 : B
+    [Schema]
+    public class B1 : B
     {
-        [JsonName("b1")]
-    0: int32 b;
+        [Attribute("JsonName", "b1")]
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct B2 : B1
+    [Schema]
+    public class B2 : B1
     {
-        [JsonName("b2")]
-    0: int32 b;
+        [Attribute("JsonName", "b2")]
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct B3 : B2
+    [Schema]
+    public class B3 : B2
     {
-        [JsonName("b3")]
-    0: int32 b;
+        [Attribute("JsonName", "b3")]
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct B4 : B3
+    [Schema]
+    public class B4 : B3
     {
-        [JsonName("b4")]
-    0: int32 b;
+        [Attribute("JsonName", "b4")]
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct B5 : B4
+    [Schema]
+    public class B5 : B4
     {
-        [JsonName("b5")]
-    0: int32 b;
+        [Attribute("JsonName", "b5")]
+        [global::Cdrcs.Id(0)]
+        public Int32 b { get; set; }
     }
 
-    struct Deep : B5 { }
+    [Schema]
+    public class Deep : B5 { }
 
-    [xmlns("urn:UnitTest.Derived")]
-    struct DerivedView view_of Derived
+
+    [Schema]
+    public class NestedContainers
     {
-        derived;
+    [global::Cdrcs.Id(0)]
+    public List<List<UInt64>> vvb;
+    [global::Cdrcs.Id(1), global::Cdrcs.Type(typeof(LinkedList<nullable<Dictionary<string, bool>>>))]
+    public LinkedList<Dictionary<string, bool>> vnc;
+    [global::Cdrcs.Id(2)]
+    public List<List<BasicTypes>> vvbt;
+    [global::Cdrcs.Id(3)]
+    public List<LinkedList<Nested>> vln;
+    [global::Cdrcs.Id(4)]
+    public LinkedList<List<string>> lvs;
+    [global::Cdrcs.Id(5)]
+    public LinkedList<HashSet<float>> lsf;
+    [global::Cdrcs.Id(6)]
+    public List<HashSet<bool>> vsb;
+    [global::Cdrcs.Id(7)]
+    public Dictionary<string, LinkedList<bool>> mslb;
+/*    [global::Cdrcs.Id(8)]
+    public Dictionary<Int32, Dictionary<Int64, BasicTypesView>> mimbn;
+*/    
+    }
+
+
+    /*    [Schema]
+        [Attribute("xmlns", "urn:UnitTest.Derived")]
+        public class DerivedView view_of Derived
+        {
+            derived;
+        };
+    */
+    /*
+        [Schema]
+        public class Nothing
+        {
+            [global::Cdrcs.Id(0), Default(nothing)]
+            bool _bool;
+            [global::Cdrcs.Id(2), Default(nothing)]
+            string _str;
+            [global::Cdrcs.Id(3), Default(nothing)]
+            wstring _wstr;
+            [global::Cdrcs.Id(14), Default(nothing)]
+            sbyte _int8;
+            [global::Cdrcs.Id(15), Default(nothing)]
+            Int16 _int16;
+            [global::Cdrcs.Id(16), Default(nothing)]
+            Int32 _int32;
+            [global::Cdrcs.Id(17), Default(nothing)]
+            Int64 _int64;
+            [global::Cdrcs.Id(13), Default(nothing)]
+            byte _uint8;
+            [global::Cdrcs.Id(11), Default(nothing)]
+            UInt16 _uint16;
+            [global::Cdrcs.Id(12), Default(nothing)]
+            UInt32 _uint32;
+            [global::Cdrcs.Id(10), Default(nothing)]
+            UInt64 _uint64;
+            [global::Cdrcs.Id(18), Default(nothing)]
+            double _double;
+            [global::Cdrcs.Id(20), Default(nothing)]
+            float _float;
+            [global::Cdrcs.Id(21), Default(nothing)]
+            EnumType1 _enum1;
+            [global::Cdrcs.Id(30), Default(nothing)]
+            LinkedList<string> l;
+            [global::Cdrcs.Id(31), Default(nothing)]
+            HashSet<double> s;
+            [global::Cdrcs.Id(32), Default(nothing)]
+            List<LinkedList<Int32>> vl;
+            [global::Cdrcs.Id(33), Default(nothing)]
+            System.ArraySegment<byte> b;
+            [global::Cdrcs.Id(34), Default(nothing)]
+            Dictionary<string, double> m;
+            [global::Cdrcs.Id(35), Default(nothing)]
+            DateTime dt;
+        };
+
+        [Schema]
+        public class NotNothingView
+        {
+            [global::Cdrcs.Id(20)]
+            required float _float;
+            [global::Cdrcs.Id(21), Default(EnumValue4)]
+            required EnumType1 _enum1;
+            [global::Cdrcs.Id(30)]
+            required LinkedList<string> l;
+            [global::Cdrcs.Id(31)]
+            required HashSet<double> s;
+            [global::Cdrcs.Id(32)]
+            required List<LinkedList<Int32>> vl;
+        };
+ */
+
+        [Schema]
+        public class NullableBasicTypes
+        {
+            [global::Cdrcs.Id(0), global::Cdrcs.Type(typeof(nullable<bool>))]
+            public bool? _bool;
+            [global::Cdrcs.Id(2), global::Cdrcs.Type(typeof(nullable<string>))]
+            public string _str;
+            [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(nullable<wstring>))]
+            public wstring _wstr;
+            [global::Cdrcs.Id(14), global::Cdrcs.Type(typeof(nullable<sbyte>))]
+            public sbyte? _int8;
+            [global::Cdrcs.Id(15), global::Cdrcs.Type(typeof(nullable<Int16>))]
+            public Int16? _int16;
+            [global::Cdrcs.Id(16), global::Cdrcs.Type(typeof(nullable<Int32>))]
+            public Int32? _int32;
+            [global::Cdrcs.Id(17), global::Cdrcs.Type(typeof(nullable<Int64>))]
+            public Int64? _int64;
+            [global::Cdrcs.Id(13), global::Cdrcs.Type(typeof(nullable<byte>))]
+            public byte? _uint8;
+            [global::Cdrcs.Id(11), global::Cdrcs.Type(typeof(nullable<UInt16>))]
+            public UInt16? _uint16;
+            [global::Cdrcs.Id(12), global::Cdrcs.Type(typeof(nullable<UInt32>))]
+            public UInt32? _uint32;
+            [global::Cdrcs.Id(10), global::Cdrcs.Type(typeof(nullable<UInt64>))]
+            public UInt64? _uint64;
+            [global::Cdrcs.Id(18), global::Cdrcs.Type(typeof(nullable<double>))]
+            public double? _double;
+            [global::Cdrcs.Id(20), global::Cdrcs.Type(typeof(nullable<float>))]
+            public float? _float;
+            [global::Cdrcs.Id(21), global::Cdrcs.Type(typeof(nullable<EnumType1>))]
+            public EnumType1? _enum1;
+            [global::Cdrcs.Id(22), global::Cdrcs.Type(typeof(nullable<DateTime>))]
+            public DateTime? dt;
+        };
+
+        [Schema]
+        public class NullableStruct
+        {
+            [global::Cdrcs.Id(0), global::Cdrcs.Type(typeof(nullable<BasicTypes>))]
+            public BasicTypes basic;
+            [global::Cdrcs.Id(1), global::Cdrcs.Type(typeof(nullable<Nested1>))]
+            public Nested1 nested;
+        };
+
+    [Schema]
+    public class SimpleContainers
+    {
+        [global::Cdrcs.Id(0)]
+        public LinkedList<string> strings { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        public LinkedList<BasicTypes> basics { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public Dictionary<Int32, string> numbers { get; set; }
     };
 
-    struct Nothing
+    [Schema]
+    public class Lists
     {
-     0: bool _bool = nothing;
-     2: string _str = nothing;
-     3: wstring _wstr = nothing;
-    14: int8 _int8 = nothing;
-    15: int16 _int16 = nothing;
-    16: int32 _int32 = nothing;
-    17: int64 _int64 = nothing;
-    13: uint8 _uint8 = nothing;
-    11: uint16 _uint16 = nothing;
-    12: uint32 _uint32 = nothing;
-    10: uint64 _uint64 = nothing;
-    18: double _double = nothing;
-    20: float _float = nothing;
-    21: EnumType1 _enum1 = nothing;
-    30: list<string> l = nothing;
-    31: set<double> s = nothing;
-    32: vector<list<int32>> vl = nothing;
-    33: blob b = nothing;
-    34: map<string, double> m = nothing;
-    35: DateTime dt = nothing;
+        [global::Cdrcs.Id(0)]
+        public LinkedList<bool> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public LinkedList<string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(LinkedList<wstring>))]
+        public LinkedList<string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public LinkedList<sbyte> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public LinkedList<Int16> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public LinkedList<Int32> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public LinkedList<Int64> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public LinkedList<byte> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public LinkedList<UInt16> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public LinkedList<UInt32> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public LinkedList<UInt64> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public LinkedList<double> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public LinkedList<float> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public LinkedList<EnumType1> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(30)]
+        public LinkedList<BasicTypes> basic { get; set; }
+
+        [global::Cdrcs.Id(31)]
+        public LinkedList<Nested1> nested { get; set; }
     };
 
-    struct NotNothingView
+    [Schema]
+    public class Vectors
     {
-    20: required float _float;
-    21: required EnumType1 _enum1 = EnumValue4;
-    30: required list<string> l;
-    31: required set<double> s;
-    32: required vector<list<int32>> vl;
+        [global::Cdrcs.Id(0)]
+        public List<bool> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public List<string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(List<wstring>))]
+        public List<string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public List<sbyte> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public List<Int16> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public List<Int32> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public List<Int64> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public List<byte> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public List<UInt16> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public List<UInt32> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public List<UInt64> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public List<double> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public List<float> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public List<EnumType1> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(30)]
+        public List<BasicTypes> basic { get; set; }
+
+        [global::Cdrcs.Id(31)]
+        public List<Nested1> nested { get; set; }
     };
 
-    struct NullableBasicTypes
+    [Schema]
+    public class Sets
     {
-     0: nullable<bool> _bool;
-     2: nullable<string> _str;
-     3: nullable<wstring> _wstr;
-    14: nullable<int8> _int8;
-    15: nullable<int16> _int16;
-    16: nullable<int32> _int32;
-    17: nullable<int64> _int64;
-    13: nullable<uint8> _uint8;
-    11: nullable<uint16> _uint16;
-    12: nullable<uint32> _uint32;
-    10: nullable<uint64> _uint64;
-    18: nullable<double> _double;
-    20: nullable<float> _float;
-    21: nullable<EnumType1> _enum1;
-    22: nullable<DateTime> dt;
+        [global::Cdrcs.Id(0)]
+        public HashSet<bool> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public HashSet<string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(HashSet<wstring>))]
+        public HashSet<string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public HashSet<sbyte> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public HashSet<Int16> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public HashSet<Int32> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public HashSet<Int64> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public HashSet<byte> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public HashSet<UInt16> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public HashSet<UInt32> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public HashSet<UInt64> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public HashSet<double> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public HashSet<float> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public HashSet<EnumType1> _enum1 { get; set; }
+
     };
 
-    struct NullableStruct
+    [Schema]
+    public class Maps
     {
-    0: nullable<BasicTypes> basic;
-    1: nullable<Nested1> nested;
+        [global::Cdrcs.Id(0)]
+        public Dictionary<string, bool> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public Dictionary<string, string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(Dictionary<string, wstring>))]
+        public Dictionary<string, string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public Dictionary<string, sbyte> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public Dictionary<string, Int16> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public Dictionary<string, Int32> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public Dictionary<string, Int64> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public Dictionary<string, byte> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public Dictionary<string, UInt16> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public Dictionary<string, UInt32> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public Dictionary<string, UInt64> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public Dictionary<string, double> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public Dictionary<string, float> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public Dictionary<string, EnumType1> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(22)]
+        public Dictionary<string, BasicTypes> _basic { get; set; }
+
     };
 
-    struct SimpleContainers
+    [Schema]
+    public class Containers
     {
-    0: vector<string> strings;
-    1: vector<BasicTypes> basics;
-    2: map<int32, string> numbers;
+        [global::Cdrcs.Id(0)]
+        public Lists l { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        public Sets s { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public Vectors v { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public Maps m { get; set; }
+
     };
 
-    struct Lists
+    [Schema]
+    public class VectorsOfNullable
     {
-     0: list<bool> _bool;
-     2: list<string> _str;
-     3: list<wstring> _wstr;
-    14: list<int8> _int8;
-    15: list<int16> _int16;
-    16: list<int32> _int32;
-    17: list<int64> _int64;
-    13: list<uint8> _uint8;
-    11: list<uint16> _uint16;
-    12: list<uint32> _uint32;
-    10: list<uint64> _uint64;
-    18: list<double> _double;
-    20: list<float> _float;
-    21: list<EnumType1> _enum1;
-    30: list<BasicTypes> basic;
-    31: list<Nested1> nested;
+        [global::Cdrcs.Id(0), global::Cdrcs.Type(typeof(List<nullable<bool>>))]
+        public List<bool?> _bool { get; set; }
+
+        [global::Cdrcs.Id(2), global::Cdrcs.Type(typeof(List<nullable<string>>))]
+        public List<string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(List<nullable<wstring>>))]
+        public List<string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14), global::Cdrcs.Type(typeof(List<nullable<sbyte>>))]
+        public List<sbyte?> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15), global::Cdrcs.Type(typeof(List<nullable<Int16>>))]
+        public List<Int16?> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16), global::Cdrcs.Type(typeof(List<nullable<Int32>>))]
+        public List<Int32?> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17), global::Cdrcs.Type(typeof(List<nullable<Int64>>))]
+        public List<Int64?> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13), global::Cdrcs.Type(typeof(List<nullable<byte>>))]
+        public List<byte?> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11), global::Cdrcs.Type(typeof(List<nullable<UInt16>>))]
+        public List<UInt16?> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12), global::Cdrcs.Type(typeof(List<nullable<UInt32>>))]
+        public List<UInt32?> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10), global::Cdrcs.Type(typeof(List<nullable<UInt64>>))]
+        public List<UInt64?> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18), global::Cdrcs.Type(typeof(List<nullable<double>>))]
+        public List<double?> _double { get; set; }
+
+        [global::Cdrcs.Id(20), global::Cdrcs.Type(typeof(List<nullable<float>>))]
+        public List<float?> _float { get; set; }
+
+        [global::Cdrcs.Id(21), global::Cdrcs.Type(typeof(List<nullable<EnumType1>>))]
+        public List<EnumType1?> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(30), global::Cdrcs.Type(typeof(List<nullable<BasicTypes>>))]
+        public List<BasicTypes> basic { get; set; }
+
+        [global::Cdrcs.Id(31), global::Cdrcs.Type(typeof(List<nullable<Nested1>>))]
+        public List<Nested1> nested { get; set; }
+
+        [global::Cdrcs.Id(32), global::Cdrcs.Type(typeof(List<nullable<System.ArraySegment<byte>>>))]
+        public List<System.ArraySegment<byte>?> _blob { get; set; }
+
     };
 
-    struct Vectors
+    [Schema]
+    public class MapsOfNullable
     {
-     0: vector<bool> _bool;
-     2: vector<string> _str;
-     3: vector<wstring> _wstr;
-    14: vector<int8> _int8;
-    15: vector<int16> _int16;
-    16: vector<int32> _int32;
-    17: vector<int64> _int64;
-    13: vector<uint8> _uint8;
-    11: vector<uint16> _uint16;
-    12: vector<uint32> _uint32;
-    10: vector<uint64> _uint64;
-    18: vector<double> _double;
-    20: vector<float> _float;
-    21: vector<EnumType1> _enum1;
-    30: vector<BasicTypes> basic;
-    31: vector<Nested1> nested;
+        [global::Cdrcs.Id(0), global::Cdrcs.Type(typeof(Dictionary<string, nullable<bool>>))]
+        public Dictionary<string, bool?> _bool { get; set; }
+
+        [global::Cdrcs.Id(2), global::Cdrcs.Type(typeof(Dictionary<string, nullable<string>>))]
+        public Dictionary<string, string> _str { get; set; }
+
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(Dictionary<string, nullable<wstring>>))]
+        public Dictionary<string, string> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14), global::Cdrcs.Type(typeof(Dictionary<string, nullable<sbyte>>))]
+        public Dictionary<string, sbyte?> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15), global::Cdrcs.Type(typeof(Dictionary<string, nullable<Int16>>))]
+        public Dictionary<string, Int16?> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16), global::Cdrcs.Type(typeof(Dictionary<string, nullable<Int32>>))]
+        public Dictionary<string, Int32?> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17), global::Cdrcs.Type(typeof(Dictionary<string, nullable<Int64>>))]
+        public Dictionary<string, Int64?> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13), global::Cdrcs.Type(typeof(Dictionary<string, nullable<byte>>))]
+        public Dictionary<string, byte?> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11), global::Cdrcs.Type(typeof(Dictionary<string, nullable<UInt16>>))]
+        public Dictionary<string, UInt16?> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12), global::Cdrcs.Type(typeof(Dictionary<string, nullable<UInt32>>))]
+        public Dictionary<string, UInt32?> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10), global::Cdrcs.Type(typeof(Dictionary<string, nullable<UInt64>>))]
+        public Dictionary<string, UInt64?> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18), global::Cdrcs.Type(typeof(Dictionary<string, nullable<double>>))]
+        public Dictionary<string, double?> _double { get; set; }
+
+        [global::Cdrcs.Id(20), global::Cdrcs.Type(typeof(Dictionary<string, nullable<float>>))]
+        public Dictionary<string, float?> _float { get; set; }
+
+        [global::Cdrcs.Id(21), global::Cdrcs.Type(typeof(Dictionary<string, nullable<EnumType1>>))]
+        public Dictionary<string, EnumType1?> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(22), global::Cdrcs.Type(typeof(Dictionary<string, nullable<BasicTypes>>))]
+        public Dictionary<string, BasicTypes> _basic { get; set; }
+
+        [global::Cdrcs.Id(23), global::Cdrcs.Type(typeof(Dictionary<string, nullable<System.ArraySegment<byte>>>))]
+        public Dictionary<string, System.ArraySegment<byte>> _blob { get; set; }
+
     };
 
-    struct Sets
+    [Schema]
+    public class ContainersOfNullable
     {
-     0: set<bool> _bool;
-     2: set<string> _str;
-     3: set<wstring> _wstr;
-    14: set<int8> _int8;
-    15: set<int16> _int16;
-    16: set<int32> _int32;
-    17: set<int64> _int64;
-    13: set<uint8> _uint8;
-    11: set<uint16> _uint16;
-    12: set<uint32> _uint32;
-    10: set<uint64> _uint64;
-    18: set<double> _double;
-    20: set<float> _float;
-    21: set<EnumType1> _enum1;
+        [global::Cdrcs.Id(0)]
+        public VectorsOfNullable vn { get; set; }
+
+        [global::Cdrcs.Id(1)]
+        public MapsOfNullable mn { get; set; }
+
     };
 
-    struct Maps
+    [Schema]
+    public class NullableVectors
     {
-     0: map<string, bool> _bool;
-     2: map<string, string> _str;
-     3: map<string, wstring> _wstr;
-    14: map<string, int8> _int8;
-    15: map<string, int16> _int16;
-    16: map<string, int32> _int32;
-    17: map<string, int64> _int64;
-    13: map<string, uint8> _uint8;
-    11: map<string, uint16> _uint16;
-    12: map<string, uint32> _uint32;
-    10: map<string, uint64> _uint64;
-    18: map<string, double> _double;
-    20: map<string, float> _float;
-    21: map<string, EnumType1> _enum1;
-    22: map<string, BasicTypes> _basic;
+        [global::Cdrcs.Id(0)]
+        public nullable<List<bool>> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public nullable<List<string>> _str { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public nullable<List<wstring>> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public nullable<List<sbyte>> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public nullable<List<Int16>> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public nullable<List<Int32>> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public nullable<List<Int64>> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public nullable<List<byte>> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public nullable<List<UInt16>> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public nullable<List<UInt32>> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public nullable<List<UInt64>> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public nullable<List<double>> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public nullable<List<float>> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public nullable<List<EnumType1>> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(30)]
+        public nullable<List<BasicTypes>> basic { get; set; }
+
+        [global::Cdrcs.Id(31)]
+        public nullable<List<Nested1>> nested { get; set; }
     };
 
-    struct Containers
+    [Schema]
+    public class NullableLists
     {
-    0: Lists l;
-    1: Sets s;
-    2: Vectors v;
-    3: Maps m;
+        [global::Cdrcs.Id(0)]
+        public nullable<LinkedList<bool>> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public nullable<LinkedList<string>> _str { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public nullable<LinkedList<wstring>> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public nullable<LinkedList<sbyte>> _int8 { get; set; }
+
+        [global::Cdrcs.Id(15)]
+        public nullable<LinkedList<Int16>> _int16 { get; set; }
+
+        [global::Cdrcs.Id(16)]
+        public nullable<LinkedList<Int32>> _int32 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public nullable<LinkedList<Int64>> _int64 { get; set; }
+
+        [global::Cdrcs.Id(13)]
+        public nullable<LinkedList<byte>> _uint8 { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public nullable<LinkedList<UInt16>> _uint16 { get; set; }
+
+        [global::Cdrcs.Id(12)]
+        public nullable<LinkedList<UInt32>> _uint32 { get; set; }
+
+        [global::Cdrcs.Id(10)]
+        public nullable<LinkedList<UInt64>> _uint64 { get; set; }
+
+        [global::Cdrcs.Id(18)]
+        public nullable<LinkedList<double>> _double { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        public nullable<LinkedList<float>> _float { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public nullable<LinkedList<EnumType1>> _enum1 { get; set; }
+
+        [global::Cdrcs.Id(30)]
+        public nullable<LinkedList<BasicTypes>> basic { get; set; }
+
+        [global::Cdrcs.Id(31)]
+        public nullable<LinkedList<Nested1>> nested { get; set; }
+
     };
 
-    struct VectorsOfNullable
+    [Schema]
+    public class NullableSets
     {
-     0: vector<nullable<bool>> _bool;
-     2: vector<nullable<string>> _str;
-     3: vector<nullable<wstring>> _wstr;
-    14: vector<nullable<int8>> _int8;
-    15: vector<nullable<int16>> _int16;
-    16: vector<nullable<int32>> _int32;
-    17: vector<nullable<int64>> _int64;
-    13: vector<nullable<uint8>> _uint8;
-    11: vector<nullable<uint16>> _uint16;
-    12: vector<nullable<uint32>> _uint32;
-    10: vector<nullable<uint64>> _uint64;
-    18: vector<nullable<double>> _double;
-    20: vector<nullable<float>> _float;
-    21: vector<nullable<EnumType1>> _enum1;
-    30: vector<nullable<BasicTypes>> basic;
-    31: vector<nullable<Nested1>> nested;
-    32: vector<nullable<blob>> _blob;
+        [global::Cdrcs.Id(0)]
+        public nullable<HashSet<bool>> _bool { get; set; }
+
+        [global::Cdrcs.Id(2)]
+        public nullable<HashSet<string>> _str { get; set; }
+
+        [global::Cdrcs.Id(3)]
+        public nullable<HashSet<wstring>> _wstr { get; set; }
+
+        [global::Cdrcs.Id(14)]
+        public nullable<HashSet<sbyte>> _int8 { get; set; }
+        [global::Cdrcs.Id(15)]
+        public nullable<HashSet<Int16>> _int16 { get; set; }
+        [global::Cdrcs.Id(16)]
+        public nullable<HashSet<Int32>> _int32 { get; set; }
+        [global::Cdrcs.Id(17)]
+        public nullable<HashSet<Int64>> _int64 { get; set; }
+        [global::Cdrcs.Id(13)]
+        public nullable<HashSet<byte>> _uint8 { get; set; }
+        [global::Cdrcs.Id(11)]
+        public nullable<HashSet<UInt16>> _uint16 { get; set; }
+        [global::Cdrcs.Id(12)]
+        public nullable<HashSet<UInt32>> _uint32 { get; set; }
+        [global::Cdrcs.Id(10)]
+        public nullable<HashSet<UInt64>> _uint64 { get; set; }
+        [global::Cdrcs.Id(18)]
+        public nullable<HashSet<double>> _double { get; set; }
+        [global::Cdrcs.Id(20)]
+        public nullable<HashSet<float>> _float { get; set; }
+        [global::Cdrcs.Id(21)]
+        public nullable<HashSet<EnumType1>> _enum1 { get; set; }
     };
 
-    struct MapsOfNullable
+    [Schema]
+    public class NullableMaps
     {
-     0: map<string, nullable<bool>> _bool;
-     2: map<string, nullable<string>> _str;
-     3: map<string, nullable<wstring>> _wstr;
-    14: map<string, nullable<int8>> _int8;
-    15: map<string, nullable<int16>> _int16;
-    16: map<string, nullable<int32>> _int32;
-    17: map<string, nullable<int64>> _int64;
-    13: map<string, nullable<uint8>> _uint8;
-    11: map<string, nullable<uint16>> _uint16;
-    12: map<string, nullable<uint32>> _uint32;
-    10: map<string, nullable<uint64>> _uint64;
-    18: map<string, nullable<double>> _double;
-    20: map<string, nullable<float>> _float;
-    21: map<string, nullable<EnumType1>> _enum1;
-    22: map<string, nullable<BasicTypes>> _basic;
-    23: map<string, nullable<blob>> _blob;
+        [global::Cdrcs.Id(0)]
+        public nullable<Dictionary<float, bool>> _bool { get; set; }
+        [global::Cdrcs.Id(2)]
+        public nullable<Dictionary<float, string>> _str { get; set; }
+        [global::Cdrcs.Id(3)]
+        public nullable<Dictionary<float, wstring>> _wstr { get; set; }
+        [global::Cdrcs.Id(14)]
+        public nullable<Dictionary<float, sbyte>> _int8 { get; set; }
+        [global::Cdrcs.Id(15)]
+        public nullable<Dictionary<float, Int16>> _int16 { get; set; }
+        [global::Cdrcs.Id(16)]
+        public nullable<Dictionary<float, Int32>> _int32 { get; set; }
+        [global::Cdrcs.Id(17)]
+        public nullable<Dictionary<float, Int64>> _int64 { get; set; }
+        [global::Cdrcs.Id(13)]
+        public nullable<Dictionary<float, byte>> _uint8 { get; set; }
+        [global::Cdrcs.Id(11)]
+        public nullable<Dictionary<float, UInt16>> _uint16 { get; set; }
+        [global::Cdrcs.Id(12)]
+        public nullable<Dictionary<float, UInt32>> _uint32 { get; set; }
+        [global::Cdrcs.Id(10)]
+        public nullable<Dictionary<float, UInt64>> _uint64 { get; set; }
+        [global::Cdrcs.Id(18)]
+        public nullable<Dictionary<float, double>> _double { get; set; }
+        [global::Cdrcs.Id(20)]
+        public nullable<Dictionary<float, float>> _float { get; set; }
+        [global::Cdrcs.Id(21)]
+        public nullable<Dictionary<float, EnumType1>> _enum1 { get; set; }
+        [global::Cdrcs.Id(22)]
+        public nullable<Dictionary<float, BasicTypes>> _basic { get; set; }
     };
 
-    struct ContainersOfNullable
+    [Schema]
+    public class NullableContainers
     {
-    0: VectorsOfNullable vn;
-    1: MapsOfNullable mn;
+        [global::Cdrcs.Id(0)]
+        public NullableVectors nv { get; set; }
+        [global::Cdrcs.Id(1)]
+        public NullableLists nl { get; set; }
+        [global::Cdrcs.Id(2)]
+        public NullableSets ns { get; set; }
+        [global::Cdrcs.Id(3)]
+        public NullableMaps nm { get; set; }
     };
 
-    struct NullableVectors
+    public partial class TreeNode
     {
-     0: nullable<vector<bool>> _bool;
-     2: nullable<vector<string>> _str;
-     3: nullable<vector<wstring>> _wstr;
-    14: nullable<vector<int8>> _int8;
-    15: nullable<vector<int16>> _int16;
-    16: nullable<vector<int32>> _int32;
-    17: nullable<vector<int64>> _int64;
-    13: nullable<vector<uint8>> _uint8;
-    11: nullable<vector<uint16>> _uint16;
-    12: nullable<vector<uint32>> _uint32;
-    10: nullable<vector<uint64>> _uint64;
-    18: nullable<vector<double>> _double;
-    20: nullable<vector<float>> _float;
-    21: nullable<vector<EnumType1>> _enum1;
-    30: nullable<vector<BasicTypes>> basic;
-    31: nullable<vector<Nested1>> nested;
+
+    }
+
+    [Schema]
+    public class Tree
+    {
+        [global::Cdrcs.Id(0)]
+        public nullable<TreeNode> root { get; set; }
     };
 
-    struct NullableLists
+    [Schema]
+    public partial class TreeNode
     {
-     0: nullable<list<bool>> _bool;
-     2: nullable<list<string>> _str;
-     3: nullable<list<wstring>> _wstr;
-    14: nullable<list<int8>> _int8;
-    15: nullable<list<int16>> _int16;
-    16: nullable<list<int32>> _int32;
-    17: nullable<list<int64>> _int64;
-    13: nullable<list<uint8>> _uint8;
-    11: nullable<list<uint16>> _uint16;
-    12: nullable<list<uint32>> _uint32;
-    10: nullable<list<uint64>> _uint64;
-    18: nullable<list<double>> _double;
-    20: nullable<list<float>> _float;
-    21: nullable<list<EnumType1>> _enum1;
-    30: nullable<list<BasicTypes>> basic;
-    31: nullable<list<Nested1>> nested;
+        [global::Cdrcs.Id(0)]
+        public nullable<TreeNode> left { get; set; }
+        [global::Cdrcs.Id(1)]
+        public nullable<TreeNode> right { get; set; }
+        [global::Cdrcs.Id(2)]
+        public BasicTypes value { get; set; }
+        [global::Cdrcs.Id(3)]
+        public LinkedList<Tree> trees { get; set; }
     };
 
-    struct NullableSets
+    [Schema]
+    public class StructWithDefaults
     {
-     0: nullable<set<bool>> _bool;
-     2: nullable<set<string>> _str;
-     3: nullable<set<wstring>> _wstr;
-    14: nullable<set<int8>> _int8;
-    15: nullable<set<int16>> _int16;
-    16: nullable<set<int32>> _int32;
-    17: nullable<set<int64>> _int64;
-    13: nullable<set<uint8>> _uint8;
-    11: nullable<set<uint16>> _uint16;
-    12: nullable<set<uint32>> _uint32;
-    10: nullable<set<uint64>> _uint64;
-    18: nullable<set<double>> _double;
-    20: nullable<set<float>> _float;
-    21: nullable<set<EnumType1>> _enum1;
+        [global::Cdrcs.Id(0), Default(true)]
+        public bool m_bool_1 { get; set; }
+        [global::Cdrcs.Id(1), Default(false)]
+        public bool m_bool_2 { get; set; }
+        [global::Cdrcs.Id(2)]
+        public bool m_bool_3 { get; set; }
+
+        [global::Cdrcs.Id(3), Default("default string value")]
+        public string m_str_1 { get; set; }
+        [global::Cdrcs.Id(4)]
+        public string m_str_2 { get; set; }
+
+        [global::Cdrcs.Id(5), Default(-127)]
+        public sbyte m_int8_4 { get; set; }
+        [global::Cdrcs.Id(6)]
+        public sbyte m_int8_5 { get; set; }
+
+        [global::Cdrcs.Id(7), Default(-32767)]
+        public Int16 m_int16_4 { get; set; }
+        [global::Cdrcs.Id(8)]
+        public Int16 m_int16_5 { get; set; }
+
+        [global::Cdrcs.Id(9)]
+        public Int32 m_int32_4 { get; set; }
+        [global::Cdrcs.Id(10), Default(2147483647)]
+        public Int32 m_int32_max { get; set; }
+
+        [global::Cdrcs.Id(11)]
+        public Int64 m_int64_4 { get; set; }
+        [global::Cdrcs.Id(12), Default(9223372036854775807)]
+        public Int64 m_int64_max { get; set; }
+
+        [global::Cdrcs.Id(13), Default(255)]
+        public byte m_uint8_2 { get; set; }
+        [global::Cdrcs.Id(14)]
+        public byte m_uint8_3 { get; set; }
+
+        [global::Cdrcs.Id(15), Default(65535)]
+        public UInt16 m_uint16_2 { get; set; }
+        [global::Cdrcs.Id(16)]
+        public UInt16 m_uint16_3 { get; set; }
+
+        [global::Cdrcs.Id(17)]
+        public UInt32 m_uint32_3 { get; set; }
+        [global::Cdrcs.Id(18), Default(4294967295)]
+        public UInt32 m_uint32_max { get; set; }
+
+        [global::Cdrcs.Id(19)]
+        public UInt64 m_uint64_3 { get; set; }
+        [global::Cdrcs.Id(20), Default(0xFFFFFFFFFFFFFFFF)]
+        public UInt64 m_uint64_max { get; set; }
+
+        [global::Cdrcs.Id(21)]
+        public double m_double_3 { get; set; }
+        [global::Cdrcs.Id(22), Default(-123.4567890)]
+        public double m_double_4 { get; set; }
+        [global::Cdrcs.Id(23), Default(-0.0)]
+        public double m_double_5 { get; set; }
+
+        [global::Cdrcs.Id(24)]
+        public float m_float_3 { get; set; }
+        [global::Cdrcs.Id(25), Default(2.71828183)]
+        public float m_float_4 { get; set; }
+        [global::Cdrcs.Id(26), Default(+0.0)]
+        public float m_float_7 { get; set; }
+
+        [global::Cdrcs.Id(27), Default(EnumType1.EnumValue1)]
+        public EnumType1 m_enum1 { get; set; }
+        [global::Cdrcs.Id(28), Default(EnumType1.EnumValue3)]
+        public EnumType1 m_enum2 { get; set; }
+
+        [global::Cdrcs.Id(29), Default("default wstring value")]
+        public wstring m_wstr_1 { get; set; }
+        [global::Cdrcs.Id(30)]
+        public wstring m_wstr_2 { get; set; }
     };
 
-    struct NullableMaps
+    [Schema]
+    public class StructWithBonded
     {
-     0: nullable<map<float, bool>> _bool;
-     2: nullable<map<float, string>> _str;
-     3: nullable<map<float, wstring>> _wstr;
-    14: nullable<map<float, int8>> _int8;
-    15: nullable<map<float, int16>> _int16;
-    16: nullable<map<float, int32>> _int32;
-    17: nullable<map<float, int64>> _int64;
-    13: nullable<map<float, uint8>> _uint8;
-    11: nullable<map<float, uint16>> _uint16;
-    12: nullable<map<float, uint32>> _uint32;
-    10: nullable<map<float, uint64>> _uint64;
-    18: nullable<map<float, double>> _double;
-    20: nullable<map<float, float>> _float;
-    21: nullable<map<float, EnumType1>> _enum1;
-    22: nullable<map<float, BasicTypes>> _basic;
+        [global::Cdrcs.Id(0)]
+        public bonded<Nested> field { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<bonded<Nested>> poly { get; set; }
     };
 
-    struct NullableContainers
+    [Schema]
+    public class StructWithBlobs
     {
-    0: NullableVectors nv;
-    1: NullableLists nl;
-    2: NullableSets ns;
-    3: NullableMaps nm;
+        [global::Cdrcs.Id(0)]
+        public System.ArraySegment<byte> b { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<System.ArraySegment<byte>> lb { get; set; }
+        [global::Cdrcs.Id(2)]
+        public nullable<System.ArraySegment<byte>> nb { get; set; }
     };
 
-    struct TreeNode;
-
-    struct Tree
+    [Schema]
+    public class StructWithByteLists
     {
-    0: nullable<TreeNode> root;
+        [global::Cdrcs.Id(0)]
+        public List<sbyte> b { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<List<sbyte>> lb { get; set; }
+        [global::Cdrcs.Id(2)]
+        public nullable<List<sbyte>> nb { get; set; }
     };
 
-    struct TreeNode
+/*    [Schema]
+    public class GenericNothingClass<T>
     {
-    0: nullable<TreeNode> left;
-    1: nullable<TreeNode> right;
-    2: BasicTypes value;
-    3: list<Tree> trees;
+        [global::Cdrcs.Id(4), Default(nothing)]
+        T nothingField { get; set; }
     };
 
-    struct StructWithDefaults
-    {
-    0:bool m_bool_1 = true;
-    1:bool m_bool_2 = false;
-    2:bool m_bool_3;
-
-    3:string m_str_1 = "default string value";
-    4:string m_str_2;
-
-    5:int8 m_int8_4 = -127;
-    6:int8 m_int8_5;
-
-    7:int16 m_int16_4 = -32767;
-    8:int16 m_int16_5;
-
-    9:int32 m_int32_4;
-    10:int32 m_int32_max = 2147483647;
-
-    11:int64 m_int64_4;
-    12:int64 m_int64_max = 9223372036854775807;
-
-    13:uint8 m_uint8_2 = 255;
-    14:uint8 m_uint8_3;
-
-    15:uint16 m_uint16_2 = 65535;
-    16:uint16 m_uint16_3;
-
-    17:uint32 m_uint32_3;
-    18:uint32 m_uint32_max = 4294967295;
-
-    19:uint64 m_uint64_3;
-    20:uint64 m_uint64_max = 0xFFFFFFFFFFFFFFFF;
-
-    21:double m_double_3;
-    22:double m_double_4 = -123.4567890;
-    23:double m_double_5 = -0.0;
-
-    24:float m_float_3;
-    25:float m_float_4 = 2.71828183;
-    26:float m_float_7 = +0.0;
-
-    27:EnumType1 m_enum1 = EnumValue1;
-    28:EnumType1 m_enum2 = EnumValue3;
-
-    29:wstring m_wstr_1 = L"default wstring value";
-    30:wstring m_wstr_2;
-    };
-
-    struct StructWithBonded
-    {
-    0: bonded<Nested> field;
-    1: vector<bonded<Nested>> poly;
-    };
-
-    struct StructWithBlobs
-    {
-    0: blob b;
-    1: vector<blob> lb;
-    2: nullable<blob> nb;
-    };
-
-    struct StructWithByteLists
-    {
-    0: vector<int8> b;
-    1: vector<vector<int8>> lb;
-    2: nullable<vector<int8>> nb;
-    };
-
-    struct GenericNothingClass<T>
-    {
-    4: T nothingField = nothing;
-    };
-
-    struct GenericNothingScalar<T : value>
+    [Schema]
+    public class GenericNothingScalar<T : value>
 {
-    4: T nothingField = nothing;
+        [global::Cdrcs.Id(4), Default(nothing)]
+        T nothingField { get; set; }
     };
+*/
 
-    struct GenericClass<T>
+    [Schema]
+    public class GenericClass<T>
     {
-    0: T field;
-    1: vector<T> vectorField;
-    2: list<GenericClass<T>> listGeneric;
-    3: nullable<T> nullableField;
-    4: map<string, T> mapField;
+        [global::Cdrcs.Id(0)]
+        public T field { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<T> vectorField { get; set; }
+        [global::Cdrcs.Id(2)]
+        public LinkedList<GenericClass<T>> listGeneric { get; set; }
+        [global::Cdrcs.Id(3)]
+        public nullable<T> nullableField { get; set; }
+        [global::Cdrcs.Id(4)]
+        public Dictionary<string, T> mapField { get; set; }
     };
 
-    struct GenericScalar<T : value>
+    [Schema]
+    public class GenericScalar<T>
 {
-    0: T field;
-    1: vector<T> vectorField;
-    2: list<GenericScalar<T>> listGeneric;
-    3: nullable<T> nullableField;
-    4: map<T, T> mapField;
+        [global::Cdrcs.Id(0)]
+        public T field { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<T> vectorField { get; set; }
+        [global::Cdrcs.Id(2)]
+        public LinkedList<GenericScalar<T>> listGeneric { get; set; }
+        [global::Cdrcs.Id(3)]
+        public nullable<T> nullableField { get; set; }
+        [global::Cdrcs.Id(4)]
+        public Dictionary<T, T> mapField { get; set; }
     };
 
-    struct GenericBonded<T>
+    [Schema]
+    public class GenericBonded<T>
     {
-    0: bonded<T> field;
-    1: vector<bonded<T>> poly;
+        [global::Cdrcs.Id(0)]
+        public bonded<T> field { get; set; }
+        [global::Cdrcs.Id(1)]
+        public List<bonded<T>> poly { get; set; }
     };
 
-    struct BondedGeneric
+    [Schema]
+    public class BondedGeneric
     {
-    0: GenericClass<bonded<Nested>> cbt;
-    1: GenericClass<bonded<GenericClass<wstring>>> cbgws;
+        [global::Cdrcs.Id(0)]
+        public GenericClass<bonded<Nested>> cbt;
+        [global::Cdrcs.Id(1)]
+        public GenericClass<bonded<GenericClass<wstring>>> cbgws { get; set; }
     };
 
-    struct GenericDerived<T> : GenericClass<T>
+    [Schema]
+    public class GenericDerived<T> : GenericClass<T>
     {
     };
 
-    struct Generics
+    [Schema]
+    public class Generics
     {
-    10: GenericScalar<bool> sb;
-    11: GenericScalar<float> sf;
-    12: GenericScalar<uint64> sui64;
-    13: GenericScalar<EnumType1> se;
-    14: GenericScalar<DateTime> sdt;
+        [global::Cdrcs.Id(10)]
+        public GenericScalar<bool> sb { get; set; }
+        [global::Cdrcs.Id(11)]
+        public GenericScalar<float> sf { get; set; }
+        [global::Cdrcs.Id(12)]
+        public GenericScalar<UInt64> sui64 { get; set; }
+        [global::Cdrcs.Id(13)]
+        public GenericScalar<EnumType1> se { get; set; }
+        [global::Cdrcs.Id(14)]
+        public GenericScalar<DateTime> sdt { get; set; }
 
-    20: GenericClass<set<int32>> ci32;
-    21: GenericClass<blob> cblob;
-    22: GenericClass<string> cs;
-    23: GenericClass<vector<blob>> cvblob;
-    24: GenericClass<BasicTypes> cbt;
-    25: GenericClass<wstring> cws;
-    26: GenericClass<nullable<wstring>> cnws;
-    27: GenericClass<nullable<uint64>> snui64;
-    28: GenericClass<list<wstring>> slws;
-    29: GenericClass<map<wstring, nullable<int16>>> smwsni;
+        [global::Cdrcs.Id(20)]
+        public GenericClass<HashSet<Int32>> ci32 { get; set; }
+        [global::Cdrcs.Id(21)]
+        public GenericClass<System.ArraySegment<byte>> cblob { get; set; }
+        [global::Cdrcs.Id(22)]
+        public GenericClass<string> cs { get; set; }
+        [global::Cdrcs.Id(23)]
+        public GenericClass<List<System.ArraySegment<byte>>> cvblob { get; set; }
+        [global::Cdrcs.Id(24)]
+        public GenericClass<BasicTypes> cbt { get; set; }
+        [global::Cdrcs.Id(25)]
+        public GenericClass<wstring> cws { get; set; }
+        [global::Cdrcs.Id(26), global::Cdrcs.Type(typeof(GenericClass<nullable<wstring>>))]
+        public GenericClass<wstring> cnws { get; set; }
+        [global::Cdrcs.Id(27), global::Cdrcs.Type(typeof(GenericClass<nullable<UInt64>>))]
+        public GenericClass<UInt64?> snui64 { get; set; }
+        [global::Cdrcs.Id(28)]
+        public GenericClass<LinkedList<wstring>> slws { get; set; }
+        [global::Cdrcs.Id(29)]
+        public GenericClass<Dictionary<wstring, nullable<Int16>>> smwsni { get; set; }
     };
 
-    struct GenericInheritance
+    [Schema]
+    public class GenericInheritance
     {
-    0: GenericDerived<BasicTypes> bbt;
-    1: GenericDerived<GenericClass<wstring>> bgws;
+        [global::Cdrcs.Id(0)]
+        public GenericDerived<BasicTypes> bbt { get; set; }
+        [global::Cdrcs.Id(1)]
+        public GenericDerived<GenericClass<wstring>> bgws { get; set; }
+    };
+/*
+    [Schema]
+    public class GenericsWithNothing
+    {
+        [global::Cdrcs.Id(10)]
+        GenericNothingScalar<bool> sb { get; set; }
+        [global::Cdrcs.Id(11)]
+        GenericNothingScalar<float> sf { get; set; }
+        [global::Cdrcs.Id(12)]
+        GenericNothingScalar<UInt64> sui64 { get; set; }
+        [global::Cdrcs.Id(13)]
+        GenericNothingScalar<EnumType1> se { get; set; }
+        [global::Cdrcs.Id(14)]
+        GenericNothingScalar<DateTime> sdt { get; set; }
+
+        [global::Cdrcs.Id(20)]
+        GenericNothingClass<HashSet<Int32>> ci32 { get; set; }
+        [global::Cdrcs.Id(21)]
+        GenericNothingClass<System.ArraySegment<byte>> cblob { get; set; }
+        [global::Cdrcs.Id(22)]
+        GenericNothingClass<string> cs { get; set; }
+        [global::Cdrcs.Id(23)]
+        GenericNothingClass<List<System.ArraySegment<byte>>> cvblob { get; set; }
+        [global::Cdrcs.Id(24)]
+        GenericNothingClass<wstring> cws { get; set; }
+        [global::Cdrcs.Id(25)]
+        GenericNothingClass<List<wstring>> cvws { get; set; }
+    };
+*/
+    [Schema]
+    public class BoxWstring
+    {
+        [global::Cdrcs.Id(0)]
+        public wstring value { get; set; }
     };
 
-    struct GenericsWithNothing
+    [Schema]
+    public class Box<T>
     {
-    10: GenericNothingScalar<bool> sb;
-    11: GenericNothingScalar<float> sf;
-    12: GenericNothingScalar<uint64> sui64;
-    13: GenericNothingScalar<EnumType1> se;
-    14: GenericNothingScalar<DateTime> sdt;
-
-    20: GenericNothingClass<set<int32>> ci32;
-    21: GenericNothingClass<blob> cblob;
-    22: GenericNothingClass<string> cs;
-    23: GenericNothingClass<vector<blob>> cvblob;
-    24: GenericNothingClass<wstring> cws;
-    25: GenericNothingClass<vector<wstring>> cvws;
+        [global::Cdrcs.Id(0)]
+        public T value { get; set; }
     };
 
-    struct BoxWstring
+    [Schema]
+    public class GenericWString
     {
-    0: wstring value;
+        [global::Cdrcs.Id(0)]
+        public Box<wstring> wstr { get; set; }
     };
 
-    struct Box<T>
+    [Schema]
+    public class NonGenericWString
     {
-    0: T value;
-    };
-
-    struct GenericWString
-    {
-    0: Box<wstring> wstr;
-    };
-
-    struct NonGenericWString
-    {
-    0: BoxWstring wstr;
+        [global::Cdrcs.Id(0)]
+        public BoxWstring wstr { get; set; }
     };
 
     // Name conflicts
-    enum TypeAttribute { DefaultAttribute }
-    struct IdAttribute
+    public enum TypeAttribute { DefaultAttribute }
+
+    [Schema]
+    public class IdAttribute
     {
-    0: TypeAttribute field = DefaultAttribute;
+        [global::Cdrcs.Id(0), Default(TypeAttribute.DefaultAttribute)]
+        public TypeAttribute field { get; set; }
     }
 
-    struct classT { }
-    struct structT { }
-    struct GenericConflict<structT : value>
+    [Schema]
+    public class classT { }
+
+    [Schema]
+    public class structT { }
+
+/*
+    [Schema]
+    public class GenericConflict<structT : value>
 {
-    0: structT field;
+        [global::Cdrcs.Id(0)]
+        [Schema]
+        structT field { get; set; }
     }
 
-    struct Foo<classT>
+    [Schema]
+    public class Foo<classT>
     {
-    0: classT field;
+        [global::Cdrcs.Id(0)]
+        classT field { get; set; }
     }
 
     [polymorphic("")]
-    struct WithPolymorphic
+    public class WithPolymorphic
     {
-    0: bond_meta::full_name _bond_meta;
-    1: string a = "a";
+        [global::Cdrcs.Id(0)]
+        bond_meta::full_name _bond_meta { get; set; }
+        [global::Cdrcs.Id(1), Default("a")]
+        string a { get; set; }
     }
 
-    struct DerivedPolymorphic : WithPolymorphic
+    [Schema]
+    public class DerivedPolymorphic : WithPolymorphic
     {
-    2: string b = "b";
+        [global::Cdrcs.Id(2), Default("b")]
+        string b { get; set; }
     }
 
-    struct WithMeta
+    [Schema]
+    public class WithMeta
     {
-    1: bond_meta::name theName;
-    2: bond_meta::full_name theFullName;
-    3: string a = "a";
+        [global::Cdrcs.Id(1)]
+        bond_meta::name theName { get; set; }
+        [global::Cdrcs.Id(2)]
+        bond_meta::full_name theFullName { get; set; }
+        [global::Cdrcs.Id(3), Default("a")]
+        string a { get; set; }
     }
 
-    struct DerivedWithMeta : WithMeta
+    [Schema]
+    public class DerivedWithMeta : WithMeta
     {
-    1: bond_meta::full_name anotherName;
-    2: string b = "b";
+        [global::Cdrcs.Id(1)]
+        bond_meta::full_name anotherName { get; set; }
+        [global::Cdrcs.Id(2), Default("b")]
+        string b { get; set; }
     }
 
-    struct WithConflictingMeta
+    [Schema]
+    public class WithConflictingMeta
     {
-    1: string name = "Foo";
-    2: string fullName = "Bar";
-    3: bond_meta::full_name meta;
-    }
+        [global::Cdrcs.Id(1), Default("Foo")]
+        string name { get; set; }
+        [global::Cdrcs.Id(2), Default("Bar")]
+        string fullName { get; set; }
+        [global::Cdrcs.Id(3)]
+        bond_meta::full_name meta { get; set; }
+    }*/
 
-    struct DateAsString
+    [Schema]
+    public class DateAsString
     {
-	0: string timestamp;
+        [global::Cdrcs.Id(0)]
+        public string timestamp { get; set; }
     }
 
 }
+#pragma warning enable
