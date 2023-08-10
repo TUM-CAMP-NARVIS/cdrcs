@@ -13,5 +13,10 @@ namespace Cdrcs
         public Dictionary<string, string> attributes;
         public Modifier modifier = Modifier.Optional;
         public Variant default_value;
+
+        public Metadata() { 
+            attributes = new Dictionary<string, string>();
+            default_value = new Variant();
+        }
     }
 }

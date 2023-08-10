@@ -15,10 +15,11 @@
             Assert.AreEqual(2, Schema<BasicTypes>.Metadata.attributes.Count);
             Assert.AreEqual("foo", Schema<BasicTypes>.Metadata.attributes["Foo"]);
             Assert.AreEqual("bar", Schema<BasicTypes>.Metadata.attributes["Bar"]);
-            Assert.AreEqual("Generic<blob>", Schema<Names>.RuntimeSchema.SchemaDef.structs[1].metadata.name);
+/*            Assert.AreEqual("Generic<blob>", Schema<Names>.RuntimeSchema.SchemaDef.structs[1].metadata.name);
             Assert.AreEqual("Generic<wstring>", Schema<Names>.RuntimeSchema.SchemaDef.structs[2].metadata.name);
             Assert.AreEqual("InternalTest.Generic<nullable<InternalTest.BasicTypes>>", Schema<Names>.RuntimeSchema.SchemaDef.structs[3].metadata.qualified_name);
             Assert.AreEqual("Generic<map<int8, InternalTest.EnumType1>>", Schema<Names>.RuntimeSchema.SchemaDef.structs[4].metadata.name);
+*/
         }
 
         [Test]

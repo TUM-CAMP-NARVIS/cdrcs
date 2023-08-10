@@ -11,5 +11,12 @@ namespace Cdrcs
         public Metadata metadata;
         public TypeDef base_def;
         public List<FieldDef> fields;
+
+        public StructDef()
+        {
+            metadata = new Metadata();
+            fields = new List<FieldDef>();
+            base_def = new TypeDef();
+        }
     }
 }

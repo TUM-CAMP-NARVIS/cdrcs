@@ -1,10 +1,12 @@
+#pragma warning disable
 namespace InternalTest
 {
     using System.Collections.Generic;
     using System;
     using Cdrcs.Tag;
+    using Cdrcs;
 
-    enum EnumType1
+    public enum EnumType1
     {
         EnumValue1 = 5,
         EnumValue2 = 10,
@@ -13,172 +15,173 @@ namespace InternalTest
         EnumValue5 = 9, //-10 in two's complement (cannot be expressed in csharp)
     };
 
-    [Cdrcs.Schema]
-    public class BasicTypes
+    [Schema]
+    public interface BasicTypes
     {
 
-        [Cdrcs.Id(0)]
-        [Cdrcs.Attribute("name", "Boolean")]
-        bool _bool;
+        [Id(0)]
+        [Attribute("name", "Boolean")]
+        bool _bool { get; set; }
 
-        [Cdrcs.Id(2)]
-        string _str;
+        [Id(2)]
+        string _str { get; set; }
 
-        [Cdrcs.Id(3), Cdrcs.Type(typeof(wstring))]
-        string _wstr;
+        [Id(3), Type(typeof(wstring))]
+        string _wstr { get; set; }
 
-        [Cdrcs.Id(14)]
-        Int8 _int8;
+        [Id(14)]
+        sbyte _int8 { get; set; }
 
-        [Cdrcs.Id(15)]
-        Int16 _int16;
+        [Id(15)]
+        Int16 _int16 { get; set; }
 
-        [Cdrcs.Id(16)]
-        Int32 _int32;
+        [Id(16)]
+        Int32 _int32 { get; set; }
 
-        [Cdrcs.Id(17)]
-        Int64 _int64;
+        [Id(17)]
+        Int64 _int64 { get; set; }
 
-        [Cdrcs.Id(13)]
-        UInt8 _uint8;
+        [Id(13)]
+        byte _uint8 { get; set; }
 
-        [Cdrcs.Id(11)]
-        UInt16 _uint16;
+        [Id(11)]
+        UInt16 _uint16 { get; set; }
 
-        [Cdrcs.Id(12)]
-        UInt32 _uint32;
+        [Id(12)]
+        UInt32 _uint32 { get; set; }
 
-        [Cdrcs.Id(10)]
-        UInt64 _uint64;
+        [Id(10)]
+        UInt64 _uint64 { get; set; }
 
-        [Cdrcs.Id(18)]
-        double _double;
+        [Id(18)]
+        double _double { get; set; }
 
-        [Cdrcs.Id(20)]
-        float _float;
+        [Id(20)]
+        float _float { get; set; }
 
-        [Cdrcs.Id(21), Default(EnumValue1)]
-        EnumType1 _enum1;
+        [Id(21), Default(EnumType1.EnumValue1)]
+        EnumType1 _enum1 { get; set; }
     };
 
 
-    [Cdrcs.Schema]
-    public struct Required
+    [Schema]
+    public interface Required
     {
-        [Cdrcs.Id(0)]
-        required uint32 x;
+        [Id(0), Required]
+        UInt32 x { get; set; }
     };
 
-    [Cdrcs.Schema]
-    public struct public structWithDefaults
+    [Schema]
+    public interface StructWithDefaults
     {
-    [Cdrcs.Id(0), Default(true)]
-    bool m_bool_1;
-    [Cdrcs.Id(1), Default(false)]
-    bool m_bool_2;
-    [Cdrcs.Id(2)]
-    bool m_bool_3;
+    [Id(0), Default(true)]
+    bool m_bool_1 { get; set; }
+    [Id(1), Default(false)]
+    bool m_bool_2 { get; set; }
+    [Id(2)]
+    bool m_bool_3 { get; set; }
 
-    [Cdrcs.Id(3), Default("default string value")]
-    string m_str_1;
-    [Cdrcs.Id(4)]
-    string m_str_2;
+    [Id(3), Default("default string value")]
+    string m_str_1 { get; set; }
+    [Id(4)]
+    string m_str_2 { get; set; }
 
-    [Cdrcs.Id(5), Default(-127)]
-    Int8 m_int8_4;
-    [Cdrcs.Id(6)]
-    Int8 m_int8_5;
+    [Id(5), Default((sbyte)-127)]
+    sbyte m_int8_4 { get; set; }
+    [Id(6)]
+    sbyte m_int8_5 { get; set; }
 
-    [Cdrcs.Id(7), Default(-32767)]
-    Int16 m_int16_4;
-    [Cdrcs.Id(8)]
-    Int16 m_int16_5;
+    [Id(7), Default((short)-32767)]
+    Int16 m_int16_4 { get; set; }
+    [Id(8)]
+    Int16 m_int16_5 { get; set; }
 
-    [Cdrcs.Id(9)]
-    Int32 m_int32_4;
-    [Cdrcs.Id(10), Default(2147483647)]
-    Int32 m_int32_max;
+    [Id(9)]
+    Int32 m_int32_4 { get; set; }
+    [Id(10), Default((int)2147483647)]
+    Int32 m_int32_max { get; set; }
 
-    [Cdrcs.Id(11)]
-    Int64 m_int64_4;
-    [Cdrcs.Id(12), Default(9223372036854775807)]
-    Int64 m_int64_max;
+    [Id(11)]
+    Int64 m_int64_4 { get; set; }
+    [Id(12), Default((long)9223372036854775807)]
+    Int64 m_int64_max { get; set; }
 
-    [Cdrcs.Id(13), Default(255)]
-    UInt8 m_uint8_2;
-    [Cdrcs.Id(14)]
-    UInt8 m_uint8_3;
+    [Id(13), Default((byte)255)]
+    byte m_uint8_2 { get; set; }
+    [Id(14)]
+    byte m_uint8_3 { get; set; }
 
-    [Cdrcs.Id(15), Default(65535)]
-    UInt16 m_uint16_2;
-    [Cdrcs.Id(16)]
-    UInt16 m_uint16_3;
+    [Id(15), Default((ushort)65535)]
+    UInt16 m_uint16_2 { get; set; }
+    [Id(16)]
+    UInt16 m_uint16_3 { get; set; }
 
-    [Cdrcs.Id(17)]
-    UInt32 m_uint32_3;
-    [Cdrcs.Id(18), Default(4294967295)]
-    UInt32 m_uint32_max;
+    [Id(17)]
+    UInt32 m_uint32_3 { get; set; }
+    [Id(18), Default((uint)4294967295)]
+    UInt32 m_uint32_max { get; set; }
 
-    [Cdrcs.Id(19)]
-    UInt64 m_uint64_3;
-    [Cdrcs.Id(20), Default(0xFFFFFFFFFFFFFFFF)]
-    UInt64 m_uint64_max;
+    [Id(19)]
+    UInt64 m_uint64_3 { get; set; }
+    [Id(20), Default((ulong)0xFFFFFFFFFFFFFFFF)]
+    UInt64 m_uint64_max { get; set; }
 
-    [Cdrcs.Id(21)]
-    double m_double_3;
-    [Cdrcs.Id(22), Default(-123.4567890)]
-    double m_double_4;
-    [Cdrcs.Id(23), Default(-0.0)]
-    double m_double_5;
+    [Id(21)]
+    double m_double_3 { get; set; }
+    [Id(22), Default((double)-123.4567890)]
+    double m_double_4 { get; set; }
+    [Id(23), Default((double)-0.0)]
+    double m_double_5 { get; set; }
 
-    [Cdrcs.Id(24)]
-    float m_float_3;
-    [Cdrcs.Id(25), Default(2.71828183)]
-    float m_float_4;
-    [Cdrcs.Id(26), Default(+0.0)]
-    float m_float_7;
+    [Id(24)]
+    float m_float_3 { get; set; }
+    [Id(25), Default((float)2.71828183)]
+    float m_float_4 { get; set; }
+    [Id(26), Default((float)+0.0)]
+    float m_float_7 { get; set; }
 
-    [Cdrcs.Id(27), Default(EnumValue1)]
-    EnumType1 m_enum1;
-    [Cdrcs.Id(28), Default(EnumValue3)]
-    EnumType1 m_enum2;
+    [Id(27), Default(EnumType1.EnumValue1)]
+    EnumType1 m_enum1 { get; set; }
+    [Id(28), Default(EnumType1.EnumValue3)]
+    EnumType1 m_enum2 { get; set; }
 
-    [Cdrcs.Id(29), Cdrcs.Type(typeof(wstring)), Default(L"default wstring value")]
-    string m_wstr_1;
-    [Cdrcs.Id(30), Cdrcs.Type(typeof(wstring))]
-    string m_wstr_2;
+    [Id(29), Type(typeof(wstring)), Default("default wstring value")] // how to work with wstring values in csharp??
+    string m_wstr_1 { get; set; }
+    [Id(30), Type(typeof(wstring))]
+    string m_wstr_2 { get; set; }
 };
 /*
-[Cdrcs.Schema]
+[Schema]
 public struct Generic<T>
 {
 }
 
-[Cdrcs.Schema]
+[Schema]
 public struct Names
 {
-    [Cdrcs.Id(0)]
+    [Id(0)]
     Generic<blob> gb;
-    [Cdrcs.Id(1)]
+    [Id(1)]
     Generic<wstring> gws;
-    [Cdrcs.Id(2)]
+    [Id(2)]
     Generic<nullable<BasicTypes>> gnb;
-    [Cdrcs.Id(3)]
+    [Id(3)]
     Generic<map<Int8, EnumType1>> gmie;
 }
 
-[Cdrcs.Schema]
+[Schema]
 public struct ListVsNullable
 {
-    [Cdrcs.Id(0)]
+    [Id(0)]
     nullable<Int64> nullableInt;
-    [Cdrcs.Id(1)]
+    [Id(1)]
     vector<Int64> vectorInt;
-    [Cdrcs.Id(2)]
+    [Id(2)]
     list<int64> listInt;
-    [Cdrcs.Id(3)]
+    [Id(3)]
     blob blobData;
 }
 */
 }
+#pragma warning restore
 

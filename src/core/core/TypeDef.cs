@@ -13,5 +13,11 @@ namespace Cdrcs
         public TypeDef element;
         public TypeDef key;
         public bool bonded_type;
+
+        public TypeDef() { 
+            element = null;
+            key = null;
+            bonded_type = false;
+        }
     }
 }

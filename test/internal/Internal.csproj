@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)\..\..\build\internal\Common.Internal.props" />
   <PropertyGroup>
     <ProjectGuid>{2994D2BC-2C4A-479E-AD23-051721470095}</ProjectGuid>
@@ -11,15 +11,9 @@
     <TargetFrameworks>net45</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="InternalTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <!-- Resharper Workaround -->
     <Compile Include="$(IntermediateOutputPath)\schemas_types.cs" Condition="False" />
     <!-- End Resharper Workaround -->
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="InternalTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\attributes\Attributes.csproj" />

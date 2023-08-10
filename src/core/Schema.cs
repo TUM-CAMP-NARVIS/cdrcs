@@ -35,7 +35,11 @@ namespace Cdrcs
     /// <typeparam name="T"></typeparam>
     public static class Schema<T>
     {
-        static readonly Cache instance = new Cache(typeof (T));
+        static readonly Cache instance;
+
+        static Schema() {
+            instance = new Cache(typeof(T));
+        }
 
         /// <summary>
         /// Runtime schema for the Cdrcs schema type T

@@ -11,5 +11,11 @@ namespace Cdrcs
         public Metadata metadata;
         public UInt16 id;
         public TypeDef type;
+
+        public FieldDef ()
+        {
+            metadata = new Metadata ();
+            type = new TypeDef ();
+        }
     }
 }
