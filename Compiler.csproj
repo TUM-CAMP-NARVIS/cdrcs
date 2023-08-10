@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildExtensionsPath32)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath32)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildThisFileDirectory)\build\internal\Common.Internal.props" />
+
+  <PropertyGroup>
+    <ProjectGuid>{21E175D5-BBDD-4B63-8FB7-38899BF2F9D1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Compiler</RootNamespace>
+    <AssemblyName>Compiler</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)\build\internal\Common.Internal.targets" />
+
+  <PropertyGroup>
+    <BuildDependsOn Condition="'$(OS)' == 'Windows_NT'">
+      ExternalBuild
+    </BuildDependsOn>
+    <BuildDependsOn Condition="'$(OS)' != 'Windows_NT'">
+      SkipExternalBuild
+    </BuildDependsOn>
+  </PropertyGroup>
+
+
+  <Target Name="SkipExternalBuild">
+    <Message Text="Skipping external building because it's only for Windows" Importance="High" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+
+</Project>

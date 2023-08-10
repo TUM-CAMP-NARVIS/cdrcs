@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\build\internal\Common.Internal.props" />
+  <PropertyGroup>
+    <ProjectGuid>{FF056B62-225A-47BC-B177-550FADDA4B41}</ProjectGuid>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <Configurations>Debug;Release;Fields</Configurations>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTest</RootNamespace>
+    <AssemblyName>Cdrcs.UnitTest</AssemblyName>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
+    <DefineConstants>$(DefineConstants);SUPPORTS_BIGINTEGER;SUPPORTS_XMLRESOLVER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IntermediateOutputPath>$(IntermediateOutputPath)\Properties\</IntermediateOutputPath>
+    <OutputPath>$(OutputPath)\Properties\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Fields' ">
+    <IntermediateOutputPath>$(IntermediateOutputPath)\Fields\</IntermediateOutputPath>
+    <OutputPath>$(OutputPath)\Fields\</OutputPath>
+    <CdrcsOptions>--fields --collection-interfaces</CdrcsOptions>
+  </PropertyGroup>
+  <ItemGroup>
+    <CdrcsImportDirectory Include="import dir with spaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <CdrcsCodegen Update="Aliases.bond">
+      <Options>$(CdrcsOptions) --using="Lazy=Lazy&lt;{0}&gt;" --using="OrderedSet=SortedSet&lt;{0}&gt;" --using="Decimal=decimal" --using="EnumString=Alias.EnumString&lt;{0}&gt;" --using="Array={0}[]" --using=ArrayBlob=byte[] --using="CustomList=UnitTest.Aliases.SomeCustomList&lt;{0}&gt;"</Options>
+    </CdrcsCodegen>
+    <CdrcsCodegen Update="ReadOnly.bond">
+      <Options Condition=" '$(Configuration)' != 'Fields' ">$(CdrcsOptions) --readonly-properties</Options>
+      <Options Condition=" '$(Configuration)' == 'Fields' ">--readonly-properties --collection-interfaces</Options>
+    </CdrcsCodegen>
+    <CdrcsCodegen Update="Containers.bond">
+      <Options Condition=" '$(Configuration)' != 'Fields' ">$(CdrcsOptions) --collection-interfaces</Options>
+      <Options Condition=" '$(Configuration)' == 'Fields' ">--fields</Options>
+    </CdrcsCodegen>
+    <CdrcsCodegen Update="UnitTest.bond">
+      <Options>$(CdrcsOptions) --using="DateTime=System.DateTime"</Options>
+    </CdrcsCodegen>
+    <CdrcsCodegen Update="ImmutableCollections.bond">
+      <Options>$(CdrcsOptions) --using="ImmutableArray=System.Collections.Immutable.ImmutableArray&lt;{0}&gt;" --using="ImmutableList=System.Collections.Immutable.ImmutableList&lt;{0}&gt;" --using="ImmutableHashSet=System.Collections.Immutable.ImmutableHashSet&lt;{0}&gt;" --using="ImmutableSortedSet=System.Collections.Immutable.ImmutableSortedSet&lt;{0}&gt;" --using="ImmutableDictionary=System.Collections.Immutable.ImmutableDictionary&lt;{0},{1}&gt;" --using="ImmutableSortedDictionary=System.Collections.Immutable.ImmutableSortedDictionary&lt;{0},{1}&gt;"</Options>
+    </CdrcsCodegen>
+    <!-- Resharper Workaround -->
+    <Compile Include="$(IntermediateOutputPath)\Aliases_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\Cdrcs File With Spaces_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\Containers_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\NamespaceConflict_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\NamespaceConflictCdrcs_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\ReadOnly_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\UnitTest_types.cs" Condition="False" />
+    <Compile Include="$(IntermediateOutputPath)\ImmutableCollections_types.cs" Condition="False" />
+    <!-- End Resharper Workaround -->
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.*" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\src\core\Cdrcs.csproj" />
+    <ProjectReference Include="..\..\src\reflection\reflection.csproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\build\internal\Common.Internal.targets" />
+</Project>

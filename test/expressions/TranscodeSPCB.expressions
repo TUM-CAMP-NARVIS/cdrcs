@@ -1,0 +1,1173 @@
+.Lambda #Lambda1<System.Action`2[Cdrcs.Protocols.SimpleBinaryReader`1[Cdrcs.IO.Unsafe.InputStream],Cdrcs.Protocols.CompactBinaryWriter`1[Cdrcs.IO.Unsafe.OutputStream]]>(
+    Cdrcs.Protocols.SimpleBinaryReader`1[Cdrcs.IO.Unsafe.InputStream] $reader,
+    Cdrcs.Protocols.CompactBinaryWriter`1[Cdrcs.IO.Unsafe.OutputStream] $writer) {
+    .Block() {
+        .Call $writer.WriteStructBegin(.Constant<Cdrcs.Metadata>(Example));
+        .Block() {
+            .Call $writer.WriteBaseBegin(.Constant<Cdrcs.Metadata>(Base));
+            .If (
+                .Call $reader.ReadFieldOmitted()
+            ) {
+                .Call $writer.WriteFieldOmitted(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(0),
+                    .Constant<Cdrcs.Metadata>(vvb))
+            } .Else {
+                .Block() {
+                    .Call $writer.WriteFieldBegin(
+                        .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                        .Constant<System.UInt16>(0),
+                        .Constant<Cdrcs.Metadata>(vvb));
+                    .Block(System.Int32 $count) {
+                        $count = .Call $reader.ReadContainerBegin();
+                        .Block() {
+                            .Call $writer.WriteContainerBegin(
+                                $count,
+                                .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                            .Loop  {
+                                .If ($count-- > 0) {
+                                    .Block() {
+                                        .Default(System.Void);
+                                        .Block(System.Int32 $count) {
+                                            $count = .Call $reader.ReadContainerBegin();
+                                            .Block() {
+                                                .Call $writer.WriteContainerBegin(
+                                                    $count,
+                                                    .Constant<Cdrcs.CdrcsDataType>(BT_UINT64));
+                                                .Loop  {
+                                                    .If ($count-- > 0) {
+                                                        .Block() {
+                                                            .Default(System.Void);
+                                                            .Call $writer.WriteUInt64(.Call $reader.ReadUInt64());
+                                                            .Default(System.Void)
+                                                        }
+                                                    } .Else {
+                                                        .Break end { }
+                                                    }
+                                                }
+                                                .LabelTarget end:;
+                                                .Call $writer.WriteContainerEnd()
+                                            };
+                                            .Call $reader.ReadContainerEnd()
+                                        };
+                                        .Default(System.Void)
+                                    }
+                                } .Else {
+                                    .Break end { }
+                                }
+                            }
+                            .LabelTarget end:;
+                            .Call $writer.WriteContainerEnd()
+                        };
+                        .Call $reader.ReadContainerEnd()
+                    };
+                    .Call $writer.WriteFieldEnd()
+                }
+            };
+            .Call $writer.WriteBaseEnd()
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_BOOL),
+                .Constant<System.UInt16>(0),
+                .Constant<Cdrcs.Metadata>(_bool))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_BOOL),
+                    .Constant<System.UInt16>(0),
+                    .Constant<Cdrcs.Metadata>(_bool));
+                .Call $writer.WriteBool(.Call $reader.ReadBool());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_STRING),
+                .Constant<System.UInt16>(2),
+                .Constant<Cdrcs.Metadata>(_str))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_STRING),
+                    .Constant<System.UInt16>(2),
+                    .Constant<Cdrcs.Metadata>(_str));
+                .Call $writer.WriteString(.Call $reader.ReadString());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_UINT32),
+                .Constant<System.UInt16>(12),
+                .Constant<Cdrcs.Metadata>(_uint32))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_UINT32),
+                    .Constant<System.UInt16>(12),
+                    .Constant<Cdrcs.Metadata>(_uint32));
+                .Call $writer.WriteUInt32(.Call $reader.ReadUInt32());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_INT8),
+                .Constant<System.UInt16>(14),
+                .Constant<Cdrcs.Metadata>(_int8))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_INT8),
+                    .Constant<System.UInt16>(14),
+                    .Constant<Cdrcs.Metadata>(_int8));
+                .Call $writer.WriteInt8(.Call $reader.ReadInt8());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                .Constant<System.UInt16>(17),
+                .Constant<Cdrcs.Metadata>(_int64))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                    .Constant<System.UInt16>(17),
+                    .Constant<Cdrcs.Metadata>(_int64));
+                .Call $writer.WriteInt64(.Call $reader.ReadInt64());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_DOUBLE),
+                .Constant<System.UInt16>(18),
+                .Constant<Cdrcs.Metadata>(_double))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_DOUBLE),
+                    .Constant<System.UInt16>(18),
+                    .Constant<Cdrcs.Metadata>(_double));
+                .Call $writer.WriteDouble(.Call $reader.ReadDouble());
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                .Constant<System.UInt16>(20),
+                .Constant<Cdrcs.Metadata>(guid))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                    .Constant<System.UInt16>(20),
+                    .Constant<Cdrcs.Metadata>(guid));
+                .Block() {
+                    .Call $writer.WriteStructBegin(.Constant<Cdrcs.Metadata>(GUID));
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_UINT32),
+                            .Constant<System.UInt16>(0),
+                            .Constant<Cdrcs.Metadata>(Data1))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_UINT32),
+                                .Constant<System.UInt16>(0),
+                                .Constant<Cdrcs.Metadata>(Data1));
+                            .Call $writer.WriteUInt32(.Call $reader.ReadUInt32());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_UINT16),
+                            .Constant<System.UInt16>(1),
+                            .Constant<Cdrcs.Metadata>(Data2))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_UINT16),
+                                .Constant<System.UInt16>(1),
+                                .Constant<Cdrcs.Metadata>(Data2));
+                            .Call $writer.WriteUInt16(.Call $reader.ReadUInt16());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_UINT16),
+                            .Constant<System.UInt16>(2),
+                            .Constant<Cdrcs.Metadata>(Data3))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_UINT16),
+                                .Constant<System.UInt16>(2),
+                                .Constant<Cdrcs.Metadata>(Data3));
+                            .Call $writer.WriteUInt16(.Call $reader.ReadUInt16());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_UINT64),
+                            .Constant<System.UInt16>(3),
+                            .Constant<Cdrcs.Metadata>(Data4))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_UINT64),
+                                .Constant<System.UInt16>(3),
+                                .Constant<Cdrcs.Metadata>(Data4));
+                            .Call $writer.WriteUInt64(.Call $reader.ReadUInt64());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .Call $writer.WriteStructEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(30),
+                .Constant<Cdrcs.Metadata>(_int32Vector))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(30),
+                    .Constant<Cdrcs.Metadata>(_int32Vector));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT32));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Call $writer.WriteInt32(.Call $reader.ReadInt32());
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(40),
+                .Constant<Cdrcs.Metadata>(_nestedVector))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(40),
+                    .Constant<Cdrcs.Metadata>(_nestedVector));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block() {
+                                        .Call $writer.WriteStructBegin(.Constant<Cdrcs.Metadata>(Nested));
+                                        .If (
+                                            .Call $reader.ReadFieldOmitted()
+                                        ) {
+                                            .Call $writer.WriteFieldOmitted(
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_DOUBLE),
+                                                .Constant<System.UInt16>(0),
+                                                .Constant<Cdrcs.Metadata>(_double))
+                                        } .Else {
+                                            .Block() {
+                                                .Call $writer.WriteFieldBegin(
+                                                    .Constant<Cdrcs.CdrcsDataType>(BT_DOUBLE),
+                                                    .Constant<System.UInt16>(0),
+                                                    .Constant<Cdrcs.Metadata>(_double));
+                                                .Call $writer.WriteDouble(.Call $reader.ReadDouble());
+                                                .Call $writer.WriteFieldEnd()
+                                            }
+                                        };
+                                        .Call $writer.WriteStructEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(50),
+                .Constant<Cdrcs.Metadata>(b))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(50),
+                    .Constant<Cdrcs.Metadata>(b));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                        .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(51),
+                .Constant<Cdrcs.Metadata>(_blobList))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(51),
+                    .Constant<Cdrcs.Metadata>(_blobList));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(52),
+                .Constant<Cdrcs.Metadata>(_blobVector))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(52),
+                    .Constant<Cdrcs.Metadata>(_blobVector));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                .Constant<System.UInt16>(53),
+                .Constant<Cdrcs.Metadata>(_blobMap))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                    .Constant<System.UInt16>(53),
+                    .Constant<Cdrcs.Metadata>(_blobMap));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT32),
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Call $writer.WriteInt32(.Call $reader.ReadInt32());
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(54),
+                .Constant<Cdrcs.Metadata>(_blobNullable))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(54),
+                    .Constant<Cdrcs.Metadata>(_blobNullable));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                .Constant<System.UInt16>(60),
+                .Constant<Cdrcs.Metadata>(_map))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                    .Constant<System.UInt16>(60),
+                    .Constant<Cdrcs.Metadata>(_map));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT32),
+                            .Constant<Cdrcs.CdrcsDataType>(BT_DOUBLE));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Call $writer.WriteInt32(.Call $reader.ReadInt32());
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Call $writer.WriteDouble(.Call $reader.ReadDouble());
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(70),
+                .Constant<Cdrcs.Metadata>(_decimal))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(70),
+                    .Constant<Cdrcs.Metadata>(_decimal));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                        .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(71),
+                .Constant<Cdrcs.Metadata>(_decList))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(71),
+                    .Constant<Cdrcs.Metadata>(_decList));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(72),
+                .Constant<Cdrcs.Metadata>(_decVector))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(72),
+                    .Constant<Cdrcs.Metadata>(_decVector));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                .Constant<System.UInt16>(73),
+                .Constant<Cdrcs.Metadata>(_decMap))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                    .Constant<System.UInt16>(73),
+                    .Constant<Cdrcs.Metadata>(_decMap));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT32),
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Call $writer.WriteInt32(.Call $reader.ReadInt32());
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(74),
+                .Constant<Cdrcs.Metadata>(_decNullable))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(74),
+                    .Constant<Cdrcs.Metadata>(_decNullable));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(75),
+                .Constant<Cdrcs.Metadata>(_decimal_req))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(75),
+                    .Constant<Cdrcs.Metadata>(_decimal_req));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                        .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(80),
+                .Constant<Cdrcs.Metadata>(_reference))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(80),
+                    .Constant<Cdrcs.Metadata>(_reference));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                        .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(81),
+                .Constant<Cdrcs.Metadata>(_refList))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(81),
+                    .Constant<Cdrcs.Metadata>(_refList));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(82),
+                .Constant<Cdrcs.Metadata>(_refVector))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(82),
+                    .Constant<Cdrcs.Metadata>(_refVector));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                .Constant<System.UInt16>(83),
+                .Constant<Cdrcs.Metadata>(_refMap))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_MAP),
+                    .Constant<System.UInt16>(83),
+                    .Constant<Cdrcs.Metadata>(_refMap));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT32),
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Call $writer.WriteInt32(.Call $reader.ReadInt32());
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                .Constant<System.UInt16>(84),
+                .Constant<Cdrcs.Metadata>(_refNullable))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_LIST),
+                    .Constant<System.UInt16>(84),
+                    .Constant<Cdrcs.Metadata>(_refNullable));
+                .Block(System.Int32 $count) {
+                    $count = .Call $reader.ReadContainerBegin();
+                    .Block() {
+                        .Call $writer.WriteContainerBegin(
+                            $count,
+                            .Constant<Cdrcs.CdrcsDataType>(BT_LIST));
+                        .Loop  {
+                            .If ($count-- > 0) {
+                                .Block() {
+                                    .Default(System.Void);
+                                    .Block(System.Int32 $count) {
+                                        $count = .Call $reader.ReadContainerBegin();
+                                        .Block() {
+                                            .Call $writer.WriteContainerBegin(
+                                                $count,
+                                                .Constant<Cdrcs.CdrcsDataType>(BT_INT8));
+                                            .Call $writer.WriteBytes(.Call $reader.ReadBytes($count));
+                                            .Call $writer.WriteContainerEnd()
+                                        };
+                                        .Call $reader.ReadContainerEnd()
+                                    };
+                                    .Default(System.Void)
+                                }
+                            } .Else {
+                                .Break end { }
+                            }
+                        }
+                        .LabelTarget end:;
+                        .Call $writer.WriteContainerEnd()
+                    };
+                    .Call $reader.ReadContainerEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                .Constant<System.UInt16>(85),
+                .Constant<Cdrcs.Metadata>(_dt))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                    .Constant<System.UInt16>(85),
+                    .Constant<Cdrcs.Metadata>(_dt));
+                .Block() {
+                    .Call $writer.WriteStructBegin(.Constant<Cdrcs.Metadata>(Generic<int64>));
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                            .Constant<System.UInt16>(0),
+                            .Constant<Cdrcs.Metadata>(value))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                                .Constant<System.UInt16>(0),
+                                .Constant<Cdrcs.Metadata>(value));
+                            .Call $writer.WriteInt64(.Call $reader.ReadInt64());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .Call $writer.WriteStructEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .If (
+            .Call $reader.ReadFieldOmitted()
+        ) {
+            .Call $writer.WriteFieldOmitted(
+                .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                .Constant<System.UInt16>(86),
+                .Constant<Cdrcs.Metadata>(_dt2))
+        } .Else {
+            .Block() {
+                .Call $writer.WriteFieldBegin(
+                    .Constant<Cdrcs.CdrcsDataType>(BT_STRUCT),
+                    .Constant<System.UInt16>(86),
+                    .Constant<Cdrcs.Metadata>(_dt2));
+                .Block() {
+                    .Call $writer.WriteStructBegin(.Constant<Cdrcs.Metadata>(GenericNothing<int64>));
+                    .If (
+                        .Call $reader.ReadFieldOmitted()
+                    ) {
+                        .Call $writer.WriteFieldOmitted(
+                            .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                            .Constant<System.UInt16>(0),
+                            .Constant<Cdrcs.Metadata>(value))
+                    } .Else {
+                        .Block() {
+                            .Call $writer.WriteFieldBegin(
+                                .Constant<Cdrcs.CdrcsDataType>(BT_INT64),
+                                .Constant<System.UInt16>(0),
+                                .Constant<Cdrcs.Metadata>(value));
+                            .Call $writer.WriteInt64(.Call $reader.ReadInt64());
+                            .Call $writer.WriteFieldEnd()
+                        }
+                    };
+                    .Call $writer.WriteStructEnd()
+                };
+                .Call $writer.WriteFieldEnd()
+            }
+        };
+        .Call $writer.WriteStructEnd()
+    }
+}
