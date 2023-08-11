@@ -13,7 +13,11 @@ namespace Cdrcs
         public static readonly RuntimeSchema Empty = new RuntimeSchema();
         public SchemaDef SchemaDef { get { return schemaDef; } }
         public TypeDef TypeDef { get { return typeDef; } }
-        public StructDef StructDef { get { return schemaDef.structs[typeDef.struct_def]; } }
+        public StructDef StructDef { 
+            get { 
+                return schemaDef.structs[typeDef.struct_def]; 
+            } 
+        }
         public bool HasValue { get { return schemaDef != null && typeDef != null; } }
         public bool IsStruct { get { return HasValue && typeDef.id == CdrcsDataType.BT_STRUCT; } }
         public bool IsCdrcsed { get { return HasValue && typeDef.bonded_type; } }

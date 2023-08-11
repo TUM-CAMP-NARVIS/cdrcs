@@ -36,7 +36,10 @@ namespace Cdrcs
         public static ICdrcsed From<I>(I input, RuntimeSchema schema)
             where I : IInputStream, ICloneable<I>
         {
-            input.ReadEncapsulation();
+            if (input.Length > 0)
+            {
+                input.ReadEncapsulation();
+            }
             // we only support one protocol for now
             var protocol = ProtocolType.DDS_CDR_PROTOCOL;
 
@@ -86,7 +89,9 @@ namespace Cdrcs
         public static T From<I>(I input)
             where I : IInputStream, ICloneable<I>
         {
-            input.ReadEncapsulation();
+            if (input.Length > 0) {
+                input.ReadEncapsulation();
+            }
             // we only support one protocol here for now ..
             var protocol = ProtocolType.DDS_CDR_PROTOCOL;
 

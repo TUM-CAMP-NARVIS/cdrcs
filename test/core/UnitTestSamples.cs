@@ -26,10 +26,10 @@ namespace UnitTestSamples
         public bool _bool { get; set; }
 
         [global::Cdrcs.Id(2)]
-        public string _str { get; set; }
+        public string _str { get; set; } = "";
 
-        [global::Cdrcs.Id(3)]
-        public wstring _wstr { get; set; }
+        [global::Cdrcs.Id(3), global::Cdrcs.Type(typeof(wstring))]
+        public string _wstr { get; set; } = "";
 
         [global::Cdrcs.Id(14)]
         public sbyte _int8 { get; set; }
@@ -64,8 +64,8 @@ namespace UnitTestSamples
         [global::Cdrcs.Id(21), Default(EnumType1.EnumValue1)]
         public EnumType1 _enum1 { get; set; }
 
-        [global::Cdrcs.Id(22)]
-        public DateTime dt { get; set; }
+        /*[global::Cdrcs.Id(22), global::Cdrcs.Type(typeof(UInt64))]
+        public DateTime dt { get; set; }*/
     };
 
     [Schema]
@@ -150,7 +150,7 @@ namespace UnitTestSamples
 
         [Attribute("JsonName", "RequiredY")]
         [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
-        public BasicTypes y { get; set; }
+        public BasicTypes y { get; set; } = new BasicTypes();
     };
 
     [Schema]
@@ -160,7 +160,7 @@ namespace UnitTestSamples
         public UInt32 foo { get; set; }
 
         [global::Cdrcs.Id(2), global::Cdrcs.RequiredAttribute]
-        public string bar { get; set; }
+        public string bar { get; set; } = "";
 
         [global::Cdrcs.Id(3)]
         public bool flag { get; set; }
@@ -174,11 +174,11 @@ namespace UnitTestSamples
     {
         [Attribute("JsonName", "OptionalX")]
         [global::Cdrcs.Id(7), global::Cdrcs.RequiredOptional]
-        public UInt32 x { get; set; } 
+        public UInt32 x { get; set; }
 
         [Attribute("JsonName", "OptionalY")]
         [global::Cdrcs.Id(9), global::Cdrcs.RequiredOptional]
-        public BasicTypes y { get; set; }
+        public BasicTypes y { get; set; } = new BasicTypes();
 };
 
     [Schema]
@@ -188,7 +188,7 @@ namespace UnitTestSamples
         public UInt32 x { get; set; }
 
         [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
-        public BasicTypes y { get; set; }
+        public BasicTypes y { get; set; } = new BasicTypes();
     }
 
     [Schema]
@@ -198,8 +198,8 @@ namespace UnitTestSamples
         public UInt32 x { get; set; }
 
         [global::Cdrcs.Id(9), global::Cdrcs.RequiredOptional]
-        public BasicTypes y { get; set; }
-}
+        public BasicTypes y { get; set; } = new BasicTypes();
+    }
 
     [Schema]
     public class RequiredInBaseAndDerived : Required
@@ -208,7 +208,7 @@ namespace UnitTestSamples
         public UInt32 x { get; set; }
 
         [global::Cdrcs.Id(9), global::Cdrcs.RequiredAttribute]
-        public BasicTypes y { get; set; }
+        public BasicTypes y { get; set; } = new BasicTypes();
     }
 
 /*    [Schema]
@@ -222,23 +222,23 @@ namespace UnitTestSamples
     public class Nested1
     {
         [global::Cdrcs.Id(0)]
-        public BasicTypes basic1 { get; set; }
+        public BasicTypes basic1 { get; set; } = new BasicTypes();
 
         [global::Cdrcs.Id(1)]
-        public BasicTypes basic2 { get; set; }
+        public BasicTypes basic2 { get; set; } = new BasicTypes();
 
         [global::Cdrcs.Id(2)]
-        public Cdrcs.GUID guid { get; set; }
+        public Cdrcs.GUID guid { get; set; } = new Cdrcs.GUID();
     };
 
     [Schema]
     public class Nested
     {
         [global::Cdrcs.Id(0)]
-        public BasicTypes basic { get; set; }
+        public BasicTypes basic { get; set; } = new BasicTypes();
 
         [global::Cdrcs.Id(1)]
-        public Nested1 nested { get; set; }
+        public Nested1 nested { get; set; } = new Nested1();
     };
 
     [Schema]
@@ -254,7 +254,7 @@ namespace UnitTestSamples
 
         [Attribute("JsonName", "nestedDerived")]
         [global::Cdrcs.Id(1)]
-        public Nested1 nested { get; set; }
+        public Nested1 nested { get; set; } = new Nested1();
     };
 
     [Schema]

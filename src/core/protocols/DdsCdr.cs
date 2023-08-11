@@ -132,7 +132,7 @@ namespace Cdrcs.Protocols
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteFieldOmitted(CdrcsDataType dataType, ushort id, Metadata metadata)
         {
-            Console.Write("FieldOmitted should not be called!!");
+            Console.WriteLine("FieldOmitted should not be called: " + dataType + " id: " + id);
         }
 
 
@@ -338,7 +338,7 @@ namespace Cdrcs.Protocols
         public void WriteString(string value)
         {
             output.Align(4);
-            if (value.Length == 0)
+            if (value == null || value.Length == 0)
             {
                 output.WriteUInt32(0);
             }
@@ -358,7 +358,7 @@ namespace Cdrcs.Protocols
         public void WriteWString(string value)
         {
             output.Align(4);
-            if (value.Length == 0)
+            if (value == null || value.Length == 0)
             {
                 output.WriteUInt32(0);
             }
@@ -410,105 +410,21 @@ namespace Cdrcs.Protocols
 
         #region Complex types
 
-        /// <summary>
-        /// Start reading a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadStructBegin()
-        { }
-
-        /// <summary>
-        /// Start reading a base of a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadBaseBegin()
-        { }
-
-        /// <summary>
-        /// End reading a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadStructEnd()
-        { }
-
-        /// <summary>
-        /// End reading a base of a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadBaseEnd()
-        { }
-
-        /// <summary>
-        /// Start reading a field
-        /// </summary>
-        /// <param name="type">An out parameter set to the field type
-        /// or BT_STOP/BT_STOP_BASE if there is no more fields in current struct/base</param>
-        /// <param name="id">Out parameter set to the field identifier</param>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadFieldBegin(out CdrcsDataType type, out ushort id)
+        public bool ReadFieldOmitted()
         {
-            // CDR does not support reading the types unless we're using x-types extensions
-            type = CdrcsDataType.BT_UNAVAILABLE;
-            id = 0;
+            return false;
         }
-
-        /// <summary>
-        /// End reading a field
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadFieldEnd()
-        { }
 
         /// <summary>
         /// Start reading a list or set container
         /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="elementType">An out parameter set to type of container elements</param>
         /// <exception cref="EndOfStreamException"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadContainerBegin(out int count, out CdrcsDataType elementType)
+        public int ReadContainerBegin()
         {
-            // CDR does not support reading the types unless we're using x-types extensions
-            elementType = CdrcsDataType.BT_UNAVAILABLE;
             input.Align(4);
-            count = checked((int)input.ReadUInt32());
-        }
-
-        /// <summary>
-        /// Start reading a fixed-size list or set container
-        /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="elementType">An out parameter set to type of container elements</param>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadFixedContainerBegin(out int count, out CdrcsDataType elementType)
-        {
-            // CDR does not support reading the types unless we're using x-types extensions
-            elementType = CdrcsDataType.BT_UNAVAILABLE;
-            count = 0;
-        }
-
-        /// <summary>
-        /// Start reading a map container
-        /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="keyType">An out parameter set to the type of map keys</param>
-        /// <param name="valueType">An out parameter set to the type of map values</param>
-        /// <exception cref="EndOfStreamException"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReadContainerBegin(out int count, out CdrcsDataType keyType, out CdrcsDataType valueType)
-        {
-            // CDR does not support reading the types unless we're using x-types extensions
-            keyType = CdrcsDataType.BT_UNAVAILABLE;
-            valueType = CdrcsDataType.BT_UNAVAILABLE;
-            input.Align(4);
-            count = checked((int)input.ReadUInt32());
+            return checked((int)input.ReadUInt32());
         }
 
         /// <summary>
@@ -534,6 +450,13 @@ namespace Cdrcs.Protocols
             return input.ReadUInt8();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipUInt8()
+        {
+            input.Align(1);
+            input.SkipBytes(1);
+        }
+
         /// <summary>
         /// Read an UInt16
         /// </summary>
@@ -543,6 +466,13 @@ namespace Cdrcs.Protocols
         {
             input.Align(2);
             return input.ReadUInt16();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipUInt16()
+        {
+            input.Align(2);
+            input.SkipBytes(2);
         }
 
         /// <summary>
@@ -556,6 +486,13 @@ namespace Cdrcs.Protocols
             return input.ReadUInt32();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipUInt32()
+        {
+            input.Align(4);
+            input.SkipBytes(4);
+        }
+
         /// <summary>
         /// Read an UInt64
         /// </summary>
@@ -565,6 +502,13 @@ namespace Cdrcs.Protocols
         {
             input.Align(8);
             return input.ReadUInt64();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipUInt64()
+        {
+            input.Align(8);
+            input.SkipBytes(8);
         }
 
         /// <summary>
@@ -578,6 +522,13 @@ namespace Cdrcs.Protocols
             return (sbyte)input.ReadUInt8();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipInt8()
+        {
+            input.Align(1);
+            input.SkipBytes(1);
+        }
+
         /// <summary>
         /// Read an Int16
         /// </summary>
@@ -587,6 +538,13 @@ namespace Cdrcs.Protocols
         {
             input.Align(2);
             return (short)input.ReadUInt16();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipInt16()
+        {
+            input.Align(2);
+            input.SkipBytes(2);
         }
 
         /// <summary>
@@ -600,6 +558,13 @@ namespace Cdrcs.Protocols
             return (int)input.ReadUInt32();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipInt32()
+        {
+            input.Align(4);
+            input.SkipBytes(4);
+        }
+
         /// <summary>
         /// Read an Int64
         /// </summary>
@@ -611,6 +576,13 @@ namespace Cdrcs.Protocols
             return (long)input.ReadUInt64();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipInt64()
+        {
+            input.Align(8);
+            input.SkipBytes(8);
+        }
+
         /// <summary>
         /// Read a bool
         /// </summary>
@@ -619,6 +591,12 @@ namespace Cdrcs.Protocols
         public bool ReadBool()
         {
             return input.ReadUInt8() != 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipBool()
+        {
+            input.SkipBytes(1);
         }
 
         /// <summary>
@@ -632,6 +610,13 @@ namespace Cdrcs.Protocols
             return input.ReadUInt32();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipEnum()
+        {
+            input.Align(4);
+            input.SkipBytes(4);
+        }
+
         /// <summary>
         /// Read a float
         /// </summary>
@@ -641,6 +626,13 @@ namespace Cdrcs.Protocols
         {
             input.Align(4);
             return input.ReadFloat();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipFloat()
+        {
+            input.Align(4);
+            input.SkipBytes(4);
         }
 
         /// <summary>
@@ -654,6 +646,13 @@ namespace Cdrcs.Protocols
             return input.ReadDouble();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipDouble()
+        {
+            input.Align(8);
+            input.SkipBytes(8);
+        }
+
         /// <summary>
         /// Read a UTF-8 string
         /// </summary>
@@ -663,7 +662,25 @@ namespace Cdrcs.Protocols
         {
             input.Align(4);
             var length = checked((int)input.ReadUInt32());
-            return length == 0 ? string.Empty : input.ReadString(Encoding.UTF8, length);
+            if (length > 0)
+            {
+                length -= 1; // substract the end byte
+            }
+            if (length <= 0)
+            {
+                return string.Empty;
+            }
+            var result = input.ReadString(Encoding.UTF8, length);
+            input.ReadUInt8();
+            return result;
+
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipString()
+        {
+            input.Align(4);
+            input.SkipBytes((int)ReadUInt32());
         }
 
         /// <summary>
@@ -674,9 +691,29 @@ namespace Cdrcs.Protocols
         public string ReadWString()
         {
             input.Align(4);
+            var length = checked((int)input.ReadUInt32());
+            if (length > 0)
+            {
+                length -= 1; // substract the end byte
+            }
+            length *=  2;
+            input.Align(2);
+            if (length <= 0)
+            {
+                return string.Empty;
+            }
+            var result = input.ReadString(Encoding.Unicode, length);
+            input.ReadUInt8();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipWString()
+        {
+            input.Align(4);
             var length = checked((int)(input.ReadUInt32() * 2));
             input.Align(2);
-            return length == 0 ? string.Empty : input.ReadString(Encoding.Unicode, length);
+            input.SkipBytes(length);
         }
 
         /// <summary>
@@ -704,131 +741,13 @@ namespace Cdrcs.Protocols
         #endregion
 
         #region Skip
-        /// <summary>
-        /// Skip a value of specified type
-        /// </summary>
-        /// <param name="type">Type of the value to skip</param>
-        /// <exception cref="EndOfStreamException"/>
-        public void Skip(CdrcsDataType type)
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SkipBytes(int count)
         {
-            switch (type)
-            {
-                case (CdrcsDataType.BT_BOOL):
-                case (CdrcsDataType.BT_UINT8):
-                case (CdrcsDataType.BT_INT8):
-                    input.SkipBytes(sizeof(byte));
-                    break;
-                case (CdrcsDataType.BT_UINT16):
-                case (CdrcsDataType.BT_INT16):
-                    input.SkipBytes(sizeof(ushort));
-                    break;
-                case (CdrcsDataType.BT_UINT32):
-                case (CdrcsDataType.BT_INT32):
-                    input.SkipBytes(sizeof(uint));
-                    break;
-                case (CdrcsDataType.BT_FLOAT):
-                    input.SkipBytes(sizeof(float));
-                    break;
-                case (CdrcsDataType.BT_DOUBLE):
-                    input.SkipBytes(sizeof(double));
-                    break;
-                case (CdrcsDataType.BT_UINT64):
-                case (CdrcsDataType.BT_INT64):
-                    input.SkipBytes(sizeof(ulong));
-                    break;
-                case (CdrcsDataType.BT_STRING):
-                    input.SkipBytes(checked(((int)input.ReadUInt32())));
-                    break;
-                case (CdrcsDataType.BT_WSTRING):
-                    input.SkipBytes(checked((int)(input.ReadUInt32()) * 2));
-                    break;
-                case CdrcsDataType.BT_LIST:
-                case CdrcsDataType.BT_SET:
-                    SkipContainer();
-                    break;
-                case CdrcsDataType.BT_MAP:
-                    SkipMap();
-                    break;
-                case CdrcsDataType.BT_STRUCT:
-                    SkipStruct();
-                    break;
-                default:
-                    Throw.InvalidCdrcsDataType(type);
-                    break;
-            }
+            input.SkipBytes(count);
         }
 
-
-        void SkipContainer()
-        {
-            CdrcsDataType elementType;
-            int count;
-
-            ReadContainerBegin(out count, out elementType);
-
-            switch (elementType)
-            {
-                case CdrcsDataType.BT_BOOL:
-                case CdrcsDataType.BT_INT8:
-                case CdrcsDataType.BT_UINT8:
-                    input.SkipBytes(count);
-                    break;
-                case (CdrcsDataType.BT_UINT16):
-                case (CdrcsDataType.BT_INT16):
-                    input.SkipBytes(checked(count * sizeof(ushort)));
-                    break;
-                case (CdrcsDataType.BT_UINT32):
-                case (CdrcsDataType.BT_INT32):
-                    input.SkipBytes(checked(count * sizeof(uint)));
-                    break;
-                case (CdrcsDataType.BT_UINT64):
-                case (CdrcsDataType.BT_INT64):
-                    input.SkipBytes(checked(count * sizeof(ulong)));
-                    break;
-                case CdrcsDataType.BT_FLOAT:
-                    input.SkipBytes(checked(count * sizeof(float)));
-                    break;
-                case CdrcsDataType.BT_DOUBLE:
-                    input.SkipBytes(checked(count * sizeof(double)));
-                    break;
-                default:
-                    while (0 <= --count)
-                    {
-                        Skip(elementType);
-                    }
-                    break;
-            }
-        }
-
-        void SkipMap()
-        {
-            CdrcsDataType keyType;
-            CdrcsDataType valueType;
-            int count;
-
-            ReadContainerBegin(out count, out keyType, out valueType);
-            while (0 <= --count)
-            {
-                Skip(keyType);
-                Skip(valueType);
-            }
-        }
-
-        void SkipStruct()
-        {
-            while (true)
-            {
-                CdrcsDataType type;
-                ushort id;
-
-                ReadFieldBegin(out type, out id);
-
-                if (type == CdrcsDataType.BT_STOP_BASE) continue;
-                if (type == CdrcsDataType.BT_STOP) break;
-
-                Skip(type);
-            }
-        }
         #endregion
     }
 }

@@ -205,72 +205,13 @@ namespace UnitTest
             return array;
         }
 
-
-        // missing interface methods ..
-
-        void IProtocolReader.ReadStructBegin()
-        {
-            
-        }
-
-        void IProtocolReader.ReadBaseBegin()
-        {
-            
-        }
-
-        void IProtocolReader.ReadStructEnd()
-        {
-            
-        }
-
-        void IProtocolReader.ReadBaseEnd()
-        {
-            
-        }
-
-        void IProtocolReader.ReadFieldBegin(out CdrcsDataType type, out ushort id)
-        {
-            type = CdrcsDataType.BT_UNAVAILABLE;
-            id = 0;
-        }
-
-        void IProtocolReader.ReadFieldEnd()
-        {
-            
-        }
-
-        void IProtocolReader.ReadContainerBegin(out int count, out CdrcsDataType elementType)
-        {
-            elementType = CdrcsDataType.BT_UNAVAILABLE;
-            count = 0;
-        }
-
-        void IProtocolReader.ReadFixedContainerBegin(out int count, out CdrcsDataType elementType)
-        {
-            elementType = CdrcsDataType.BT_UNAVAILABLE;
-            count = 0;
-        }
-
-        void IProtocolReader.ReadContainerBegin(out int count, out CdrcsDataType keyType, out CdrcsDataType valueType)
-        {
-            keyType = CdrcsDataType.BT_UNAVAILABLE;
-            valueType = CdrcsDataType.BT_UNAVAILABLE;
-            count = 0;
-        }
-
-        void IProtocolReader.Skip(CdrcsDataType type)
-        {
-        }
-
-        ArraySegment<byte> IProtocolReader.ReadBytes()
-        {
-            var array = new byte[] { 5, 8, 9, 20, 70, 44, 2, 4 };
-            return new ArraySegment<byte>(array, 2, 3);
-        }
-
-        uint IProtocolReader.ReadEnum()
+        public uint ReadEnum()
         {
             return 1;
+        }
+
+        public void SkipEnum()
+        {
         }
     }
 }

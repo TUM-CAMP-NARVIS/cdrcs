@@ -179,7 +179,7 @@
             {
                 try
                 {
-                    byte[] stream = { };
+                    var stream = new BufferHolder { buffer = new byte[11] };
                     serialize(new CdrcsClass<From>(), stream);
                     /*stream.Position = 0;*/
                     deserialize(stream);
@@ -189,7 +189,6 @@
                 {}
             };
 
-            // TODO: for untagged protocol mismatch schema will be detected in schema validation
             test(Util.SerializeCDR, Util.DeserializeCDR<CdrcsClass<To>>);
         }
 
@@ -360,7 +359,7 @@
             var from = Random.Init<From>();
             Util.RoundtripStream<From, To> testRequired = (serialize, deserialize) =>
             {
-                byte[] stream = { };
+                var stream = new BufferHolder { buffer = new byte[11] };
 
                 serialize(from, stream);
                 /*stream.Position = 0;*/
@@ -453,18 +452,23 @@
             TestSerialization<T, T>(noTranscoding);
         }
 
-        void TestPayloadSize<T>(Action<T, byte[]> serialize, Action<byte[], byte[]> transcode, T obj, int size)
+        void TestPayloadSize<T>(Action<T, BufferHolder> serialize, Action<BufferHolder, BufferHolder> transcode, T obj, int size)
         {
-            byte[] stream = { };
+            var stream = new BufferHolder {
+                buffer = new byte[11]
+            };
             
             serialize(obj, stream);
-            Assert.AreEqual(size, stream.Length);
+            Assert.AreEqual(size, stream.buffer.Length);
 
-            byte[] stream2 = { };
+            var stream2 = new BufferHolder
+            {
+                buffer = new byte[11]
+            };
             {
                 /*stream.Position = 0;*/
                 transcode(stream, stream2);
-                Assert.AreEqual(size, stream2.Length);
+                Assert.AreEqual(size, stream2.buffer.Length);
             }
         }
 

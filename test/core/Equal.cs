@@ -161,12 +161,13 @@
             var result = (bool)equal.Invoke(null, new object[] { left, right });
 
             // Uncomment this block and set breakpoint here to debug unequal test failure
-            //if (!result)
-            //{
-            //    var strLeft = Util.SerializeXmlString(left);
-            //    var strRight = Util.SerializeXmlString(right);
-            //}
-
+/*            if (!result)
+            {
+                var strLeft = Util.SerializeXmlString(left);
+                var strRight = Util.SerializeXmlString(right);
+                var l = strLeft.Length;
+            }
+*/
             return result;
         }
     }

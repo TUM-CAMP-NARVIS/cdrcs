@@ -60,7 +60,7 @@
         void TestSerialization<T>()
         {
             {
-                byte[] stream = { };
+                var stream = new BufferHolder { buffer = new byte[11] };
                 var from = Random.Init<T>();
                 Util.SerializeCDR(from, stream);
                 /*stream.Position = 0;*/

@@ -814,6 +814,11 @@ namespace Cdrcs
                 }
             }
 
+            if (schemaField.MemberType.IsEnum() && defaultAttribute != null)
+            {
+                return defaultAttribute.Value;
+            }
+
             if (defaultAttribute != null)
             {
                 InvalidDefaultAttribute(schemaField, defaultAttribute.Value);
@@ -821,9 +826,9 @@ namespace Cdrcs
             
             // For classes create a default instance and get the actual default value of the member
             var objectType = declaringType.GetObjectType();
-            var objectMemeber = objectType.GetSchemaFields().Single(m => m.Id == schemaField.Id);
+            var objectMember = objectType.GetSchemaFields().Single(m => m.Id == schemaField.Id);
             var obj = Activator.CreateInstance(objectType);
-            var defaultValue = objectMemeber.GetValue(obj);
+            var defaultValue = objectMember.GetValue(obj);
             return defaultValue;
         }
 

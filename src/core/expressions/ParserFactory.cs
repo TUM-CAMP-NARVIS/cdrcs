@@ -45,7 +45,7 @@ namespace Cdrcs.Expressions
                 {
                     if (typeof(IProtocolReader).IsAssignableFrom(typeof(R)))
                     {
-                        parserType = typeof(TaggedParser<R>);
+                        parserType = typeof(UntaggedParser<R>);
                     }
                     else
                     {

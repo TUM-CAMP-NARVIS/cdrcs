@@ -16,7 +16,7 @@ namespace Cdrcs
         {
             metadata = new Metadata();
             fields = new List<FieldDef>();
-            base_def = new TypeDef();
+            base_def = null;
         }
     }
 }

@@ -12,88 +12,35 @@ namespace Cdrcs.Protocols
     /// </summary>
     public interface IProtocolReader
     {
-        /// <summary>
-        /// Start reading a struct
+
+             /// <summary>
+        /// Check if the next field was omitted
         /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadStructBegin();
+        /// <returns>true iff the field was omitted</returns>
+        bool ReadFieldOmitted();
 
         /// <summary>
-        /// Start reading a base of a struct
+        /// Start reading a container
         /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadBaseBegin();
-
-        /// <summary>
-        /// End reading a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadStructEnd();
-
-        /// <summary>
-        /// End reading a base of a struct
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadBaseEnd();
-
-        /// <summary>
-        /// Start reading a field
-        /// </summary>
-        /// <param name="type">An out parameter set to the field type 
-        /// or BT_STOP/BT_STOP_BASE if there is no more fields in current struct/base</param>
-        /// <param name="id">An out parameter set to the field identifier</param>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadFieldBegin(out CdrcsDataType type, out ushort id);
-
-        /// <summary>
-        /// End reading a field
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadFieldEnd();
-
-        /// <summary>
-        /// Start reading a list or set container
-        /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="elementType">An out parameter set to type of container elements</param>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadContainerBegin(out int count, out CdrcsDataType elementType);
-
-        /// <summary>
-        /// Start reading a fixed-size list or set container
-        /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="elementType">An out parameter set to type of container elements</param>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadFixedContainerBegin(out int count, out CdrcsDataType elementType);
-
-        /// <summary>
-        /// Start reading a map container
-        /// </summary>
-        /// <param name="count">An out parameter set to number of items in the container</param>
-        /// <param name="keyType">An out parameter set to the type of map keys</param>
-        /// <param name="valueType">An out parameter set to the type of map values</param>
-        /// <exception cref="EndOfStreamException"/>
-        void ReadContainerBegin(out int count, out CdrcsDataType keyType, out CdrcsDataType valueType);
+        /// <returns>Number of element in the container</returns>
+        int ReadContainerBegin();
 
         /// <summary>
         /// End reading a container
         /// </summary>
-        /// <exception cref="EndOfStreamException"/>
         void ReadContainerEnd();
 
-        /// <summary>
-        /// Skip a value of specified type
-        /// </summary>
-        /// <param name="type">Type of the value to skip</param>
-        /// <exception cref="EndOfStreamException"/>
-        void Skip(CdrcsDataType type);
-
-        /// <summary>
+        /// <summary> 
         /// Read an Int8
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         sbyte ReadInt8();
+
+        /// <summary> 
+        /// Skip an Int8
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipInt8();
 
         /// <summary>
         /// Read an Int16
@@ -102,10 +49,22 @@ namespace Cdrcs.Protocols
         short ReadInt16();
 
         /// <summary>
+        /// Skip an Int16
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipInt16();
+
+        /// <summary>
         /// Read an Int32
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         int ReadInt32();
+
+        /// <summary>
+        /// Skip an Int32
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipInt32();
 
         /// <summary>
         /// Read an Int64
@@ -114,16 +73,34 @@ namespace Cdrcs.Protocols
         long ReadInt64();
 
         /// <summary>
-        /// Read an UInt8
+        /// Skip an Int64
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipInt64();
+
+        /// <summary>
+        /// Read a UInt8
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         byte ReadUInt8();
 
         /// <summary>
+        /// Skip an UInt8
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipUInt8();
+
+        /// <summary> 
         /// Read an UInt16
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         ushort ReadUInt16();
+
+        /// <summary>
+        /// Skip an UInt16
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipUInt16();
 
         /// <summary>
         /// Read an UInt32
@@ -132,10 +109,22 @@ namespace Cdrcs.Protocols
         uint ReadUInt32();
 
         /// <summary>
+        /// Skip an UInt32
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipUInt32();
+
+        /// <summary>
         /// Read an UInt64
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         ulong ReadUInt64();
+
+        /// <summary>
+        /// Skip one UInt64
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipUInt64();
 
         /// <summary>
         /// Read a float
@@ -144,29 +133,71 @@ namespace Cdrcs.Protocols
         float ReadFloat();
 
         /// <summary>
+        /// Skip an float
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipFloat();
+
+        /// <summary>
         /// Read a double
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         double ReadDouble();
 
         /// <summary>
-        /// Read an array of bytes verbatim
+        /// Skip a double
         /// </summary>
-        /// <param name="count">Number of bytes to read</param>
         /// <exception cref="EndOfStreamException"/>
-        ArraySegment<byte> ReadBytes(int count);
+        void SkipDouble();
 
         /// <summary>
         /// Read an array of bytes verbatim
         /// </summary>
+        /// <param name="count">Number of bytes to read</param>
+        ArraySegment<byte> ReadBytes(int count);
+
+        /// <summary>
+        /// Skip forward specified number of bytes
+        /// </summary>
+        /// <param name="count">Number of bytes to skip</param>
         /// <exception cref="EndOfStreamException"/>
-        ArraySegment<byte> ReadBytes();
+        void SkipBytes(int count);
 
         /// <summary>
         /// Read a bool
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
         bool ReadBool();
+
+        /// <summary> 
+        /// Skip a bool
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipBool();
+
+        /// <summary>
+        /// Read a UTF8 string
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        string ReadString();
+
+        /// <summary>
+        /// Skip a UTF8 string
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipString();
+
+        /// <summary>
+        /// Read a UTF16 string
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        string ReadWString();
+
+        /// <summary>
+        /// Skip a UTF16 string
+        /// </summary>
+        /// <exception cref="EndOfStreamException"/>
+        void SkipWString();
 
         /// <summary>
         /// Read a enum value
@@ -175,16 +206,10 @@ namespace Cdrcs.Protocols
         uint ReadEnum();
 
         /// <summary>
-        /// Read a UTF-8 string
+        /// Skip an enum
         /// </summary>
         /// <exception cref="EndOfStreamException"/>
-        string ReadString();
-
-        /// <summary>
-        /// Read a UTF-16 string
-        /// </summary>
-        /// <exception cref="EndOfStreamException"/>
-        string ReadWString();
+        void SkipEnum();
     }
 
     /// <summary>

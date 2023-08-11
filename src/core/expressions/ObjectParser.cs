@@ -154,7 +154,7 @@ namespace Cdrcs.Expressions
                     Expression.Assign(convertedBlob, blob),
                     PrunedExpression.IfThenElse(notEqual, processField, omitField));
             }
-            else
+            /*else
             {
                 var defaultValue = schemaField.GetDefaultValue();
 
@@ -174,7 +174,7 @@ namespace Cdrcs.Expressions
                     cannotOmit = Expression.NotEqual(fieldValue, comparand);
                 }
             }
-
+*/            cannotOmit = Expression.Constant(true);
             return PrunedExpression.IfThenElse(cannotOmit, processField, omitField);
         }
 
